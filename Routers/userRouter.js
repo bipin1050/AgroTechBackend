@@ -18,6 +18,7 @@ const {
   forgetPassword,
   resetPassword,
   logout,
+  isLogin
 } = require("../controller/authController");
 // const { filter } = require("lodash");
 
@@ -33,6 +34,8 @@ userRouter.route("/forgetPassword").post(forgetPassword);
 userRouter.route("/resetPassword/:token").post(resetPassword);
 
 userRouter.route("/logout").get(logout);
+
+userRouter.route("/isLogin").post(isLogin);
 
 const multerStorage = multer.diskStorage({
   destination: function (req, file, cb) {

@@ -17,7 +17,7 @@ planRouter.route("/allPlans").get(getAllPlans);
 planRouter.use(protectRoute);
 planRouter.route("/plan/:id").get(getPlan);
 
-planRouter.use(isAuthorised(["admin", "restaurantowner"]));
+planRouter.use(isAuthorised(["admin", "farmer"]));
 planRouter.route("/crudPlan").post(createPlan);
 
 planRouter.route("/crudPlan/:id").patch(updatePlan).delete(deletePlan);

@@ -46,7 +46,7 @@ module.exports.login = async function loginUser(req, res) {
               "User logged in succesfully loginUser authController controller",
               role: role[0].role,
               jwt:token,
-            userDetails: data,
+              name:user.name,
           });
         } else {
           return res.status(400).json({
@@ -73,7 +73,7 @@ module.exports.login = async function loginUser(req, res) {
 // Protect route
 module.exports.protectRoute = async function protectRoute(req, res, next) {
   try {
-    console.log(req.cookies.login);
+    //console.log(req.cookies.login);
     let token;
     if (req.cookies.login) {
       console.log(req.cookies);
@@ -91,6 +91,34 @@ module.exports.protectRoute = async function protectRoute(req, res, next) {
       if ((client, includes("Mozilla" == true))) {
         return res.status(400).redirect("/login");
       }
+      // Postman
+      res.status(400).json({
+        message: "Please login protectRoute authController controller",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+module.exports.isLogin = async function isLogin(req, res) {
+  try {
+    //console.log(req.cookies.login);
+    let token=req.body.headers.authorization
+    if (token) {
+      let payload = jwt.verify(token, JWT_KEY);
+      if (payload) {
+        const user = await userModel.findById(payload.payload);
+        req.id = user.id;
+        res.status(200).json({
+          name:user.name,
+          role:user.role,
+          email:user.email
+        })
+      }
+    } else {
       // Postman
       res.status(400).json({
         message: "Please login protectRoute authController controller",
