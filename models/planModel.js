@@ -39,6 +39,9 @@ const planSchema = new mongoose.Schema({
       "Discount should not exceed price",
     ],
   },
+  description: {
+    type: String,
+  },
 });
 
 const planModel = mongoose.model("planModel", planSchema);
