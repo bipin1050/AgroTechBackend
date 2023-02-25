@@ -73,11 +73,9 @@ module.exports.login = async function loginUser(req, res) {
 // Protect route
 module.exports.protectRoute = async function protectRoute(req, res, next) {
   try {
-    //console.log(req.cookies.login);
-    let token;
-    if (req.cookies.login) {
-      console.log(req.cookies);
-      token = req.cookies.login;
+    let token=req.body.headers.authorization
+    if (token) {
+      // console.log(req.cookies);
       let payload = jwt.verify(token, JWT_KEY);
       if (payload) {
         const user = await userModel.findById(payload.payload);
@@ -98,7 +96,7 @@ module.exports.protectRoute = async function protectRoute(req, res, next) {
     }
   } catch (err) {
     res.status(500).json({
-      message: err.message,
+      message: "failed to authorize",
     });
   }
 };
