@@ -43,6 +43,7 @@ module.exports.getPlan = async function getPlan(req, res) {
 
 module.exports.createPlan = async function createPlan(req, res) {
   try {
+    req.body.userid = req.id;
     let planData = req.body;
     let createdData = await planModel.create(planData);
     return res.json({

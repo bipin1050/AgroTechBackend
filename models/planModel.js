@@ -42,6 +42,10 @@ const planSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  userid:{
+    type: String,
+    required: true
+  }
 });
 
 const planModel = mongoose.model("planModel", planSchema);
