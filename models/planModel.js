@@ -42,10 +42,10 @@ const planSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  userid:{
+  userid: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const planModel = mongoose.model("planModel", planSchema);
