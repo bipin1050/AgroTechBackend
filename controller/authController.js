@@ -32,21 +32,23 @@ module.exports.signup = async function signUp(req, res) {
 module.exports.login = async function loginUser(req, res) {
   try {
     let data = req.body;
+
     if (data.email) {
       let user = await userModel.findOne({ email: data.email });
       let role = await userModel.where({ email: data.email });
+
       if (user) {
         if (user.password == data.password) {
           let uid = user["_id"];
           let token = jwt.sign({ payload: uid }, JWT_KEY);
           res.cookie("login", token, { httpOnly: true });
-          console.log(req.cookies.login)
+          console.log(req.cookies.login);
           return res.status(200).json({
             message:
               "User logged in succesfully loginUser authController controller",
-              role: role[0].role,
-              jwt:token,
-              name:user.name,
+            role: role[0].role,
+            jwt: token,
+            name: user.name,
           });
         } else {
           return res.status(400).json({
@@ -73,11 +75,12 @@ module.exports.login = async function loginUser(req, res) {
 // Protect route
 module.exports.protectRoute = async function protectRoute(req, res, next) {
   try {
-    let token=req.body.headers.authorization
-    console.log(token)
+    let token = req.body.headers.authorization;
+    console.log(token);
     if (token) {
       // console.log(req.cookies);
       let payload = jwt.verify(token, JWT_KEY);
+      console.log(payload);
       if (payload) {
         const user = await userModel.findById(payload.payload);
         req.role = user.role;
@@ -105,17 +108,17 @@ module.exports.protectRoute = async function protectRoute(req, res, next) {
 module.exports.isLogin = async function isLogin(req, res) {
   try {
     //console.log(req.cookies.login);
-    let token=req.body.headers.authorization
+    let token = req.body.headers.authorization;
     if (token) {
       let payload = jwt.verify(token, JWT_KEY);
       if (payload) {
         const user = await userModel.findById(payload.payload);
         req.id = user.id;
         res.status(200).json({
-          name:user.name,
-          role:user.role,
-          email:user.email
-        })
+          name: user.name,
+          role: user.role,
+          email: user.email,
+        });
       }
     } else {
       // Postman

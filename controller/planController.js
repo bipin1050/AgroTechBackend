@@ -1,3 +1,4 @@
+const cartModel = require("../models/cartModel");
 const planModel = require("../models/planModel");
 
 module.exports.getAllPlans = async function getAllPlans(req, res) {
@@ -41,6 +42,31 @@ module.exports.getPlan = async function getPlan(req, res) {
   }
 };
 
+module.exports.getCart = async function getCart(req, res) {
+  try {
+    let userid = req.id;
+    const productid = await cartModel.find({ userid: userid });
+    let productarray = [];
+    for (let i = 0; i < productid.length; i++) {
+      productarray.push(productid[i].productid);
+    }
+    let products = [];
+    console.log(productarray);
+    for (let i = 0; i < productarray.length; i++) {
+      let product = await planModel.findById(productarray[i]);
+      products.push(product);
+    }
+    res.status(200).json({
+      products: products,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Error from getCart planController controller",
+      mes: err.message,
+    });
+  }
+};
+
 module.exports.createPlan = async function createPlan(req, res) {
   try {
     req.body.userid = req.id;
@@ -58,18 +84,20 @@ module.exports.createPlan = async function createPlan(req, res) {
 };
 
 module.exports.getPlanByFarmer = async function getPlanByFarmer(req, res) {
-  try{
-    let data = await planModel.find({userid:req.id});
+  try {
+    let data = await planModel.find({ userid: req.id });
     return res.json({
-      message: "Data fetched from a specific farmer getPlanByFarmer planController controller",
+      message:
+        "Data fetched from a specific farmer getPlanByFarmer planController controller",
       data: data,
     });
-  }catch(err){
+  } catch (err) {
     res.status(500).json({
-      message: "From getPlanByFarmer  getPlanByFarmer planController controller",
+      message:
+        "From getPlanByFarmer  getPlanByFarmer planController controller",
     });
   }
-}
+};
 
 module.exports.deletePlan = async function deletePlan(req, res) {
   try {
