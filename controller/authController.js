@@ -74,6 +74,7 @@ module.exports.login = async function loginUser(req, res) {
 module.exports.protectRoute = async function protectRoute(req, res, next) {
   try {
     let token=req.body.headers.authorization
+    console.log(token)
     if (token) {
       // console.log(req.cookies);
       let payload = jwt.verify(token, JWT_KEY);

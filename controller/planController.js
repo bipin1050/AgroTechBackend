@@ -57,6 +57,20 @@ module.exports.createPlan = async function createPlan(req, res) {
   }
 };
 
+module.exports.getPlanByFarmer = async function getPlanByFarmer(req, res) {
+  try{
+    let data = await planModel.find({userid:req.id});
+    return res.json({
+      message: "Data fetched from a specific farmer getPlanByFarmer planController controller",
+      data: data,
+    });
+  }catch(err){
+    res.status(500).json({
+      message: "From getPlanByFarmer  getPlanByFarmer planController controller",
+    });
+  }
+}
+
 module.exports.deletePlan = async function deletePlan(req, res) {
   try {
     let id = req.params.id;

@@ -7,6 +7,7 @@ const {
   getAllPlans,
   getPlan,
   createPlan,
+  getPlanByFarmer,
   updatePlan,
   deletePlan,
   top3Plans,
@@ -19,6 +20,8 @@ planRouter.route("/plan/:id").get(getPlan);
 
 planRouter.use(isAuthorised(["admin", "farmer"]));
 planRouter.route("/crudPlan").post(createPlan);
+
+planRouter.route('/crudPlan/farmer').post(getPlanByFarmer)
 
 planRouter.route("/crudPlan/:id").patch(updatePlan).delete(deletePlan);
 
