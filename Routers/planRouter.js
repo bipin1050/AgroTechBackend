@@ -19,7 +19,7 @@ planRouter.route("/allPlans").get(getAllPlans);
 planRouter.use(protectRoute);
 planRouter.route("/plan/:id").get(getPlan);
 
-planRouter.route("/addToCart").post(getCart)
+planRouter.route("/getCart").post(getCart)
 
 planRouter.use(isAuthorised(["admin", "farmer"]));
 planRouter.route("/crudPlan").post(createPlan);

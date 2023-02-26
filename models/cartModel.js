@@ -25,16 +25,16 @@ const cartSchema = new mongoose.Schema({
 
 const cartModel = mongoose.model("cartModel", cartSchema);
 
-// (async function createCart() {
-//   let cartObject = {
-//     userid: "638861c897084d99b3d776bd",
-//     productid: "638cd7fe872923a63d235bb1",
+// (async function createPlan() {
+//   let cartObj = {
+//     userid:"638861c897084d99b3d776bd" ,
+//     productid: "6391a5b27a32deedd69afa6b",
 //   };
-//   let data = await cartModel.create(cartObject);
+//   let data = await cartModel.create(cartObj);
 //   console.log(data);
-//   // const data = new cartModel(planObj);
-//   // await data.save();
-//   // console.log(data);
+//     // const data = new planModel(planObj);
+//     // await data.save();
+//     // console.log(data);
 // })();
 
 module.exports = cartModel;
