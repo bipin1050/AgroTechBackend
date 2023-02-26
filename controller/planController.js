@@ -3,7 +3,8 @@ const planModel = require("../models/planModel");
 
 module.exports.getAllPlans = async function getAllPlans(req, res) {
   try {
-    let plans = await planModel.find();
+    let skipby = req.params.id * 10;
+    let plans = await planModel.find().skip(skipby).limit(10);
     if (plans) {
       return res.json({
         message: "All plans retrieved getAllPlans planController controller",
