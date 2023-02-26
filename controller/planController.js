@@ -5,10 +5,13 @@ module.exports.getAllPlans = async function getAllPlans(req, res) {
   try {
     let skipby = req.params.id * 10;
     let plans = await planModel.find().skip(skipby).limit(10);
+    let totalcount = await planModel.count();
+    totalcount = totalcount / 10;
     if (plans) {
       return res.json({
         message: "All plans retrieved getAllPlans planController controller",
         data: plans,
+        totalcount: totalcount,
       });
     } else {
       return res.json({
