@@ -11,7 +11,8 @@ const {
   updatePlan,
   deletePlan,
   top3Plans,
-  getCart
+  getCart,
+  addCart
 } = require("../controller/planController");
 
 planRouter.route("/allPlans").get(getAllPlans);
@@ -20,6 +21,7 @@ planRouter.use(protectRoute);
 planRouter.route("/plan/:id").get(getPlan);
 
 planRouter.route("/getCart").post(getCart)
+planRouter.route("/addCart").post(addCart)
 
 planRouter.use(isAuthorised(["admin", "farmer"]));
 planRouter.route("/crudPlan").post(createPlan);

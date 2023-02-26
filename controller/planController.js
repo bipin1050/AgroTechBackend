@@ -69,6 +69,22 @@ module.exports.getCart = async function getCart(req, res) {
   }
 };
 
+module.exports.addCart = async function addCart(req, res) {
+  try {
+    req.body.userid = req.id;
+    let planData = req.body;
+    let createdData = await planModel.create(planData);
+    return res.json({
+      message: "Added to cart successfully addCart planController controller",
+      data: createdData,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
 module.exports.createPlan = async function createPlan(req, res) {
   try {
     req.body.userid = req.id;
