@@ -45,9 +45,9 @@ module.exports.getPlan = async function getPlan(req, res) {
 module.exports.getCart = async function getCart(req, res) {
   try {
     let userid = req.id;
-    console.log(userid)
+    console.log(userid);
     const productid = await cartModel.find({ userid: userid });
-    console.log(productid)
+    console.log(productid);
     let productarray = [];
     for (let i = 0; i < productid.length; i++) {
       productarray.push(productid[i].productid);
@@ -71,9 +71,13 @@ module.exports.getCart = async function getCart(req, res) {
 
 module.exports.addCart = async function addCart(req, res) {
   try {
-    req.body.userid = req.id;
-    let planData = req.body;
-    let createdData = await planModel.create(planData);
+    let userid = req.id;
+    let productid = req.body.productid;
+    let product = {
+      userid: userid,
+      productid: productid,
+    };
+    let createdData = await cartModel.create(product);
     return res.json({
       message: "Added to cart successfully addCart planController controller",
       data: createdData,
