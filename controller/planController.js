@@ -45,7 +45,9 @@ module.exports.getPlan = async function getPlan(req, res) {
 module.exports.getCart = async function getCart(req, res) {
   try {
     let userid = req.id;
+    console.log(userid)
     const productid = await cartModel.find({ userid: userid });
+    console.log(productid)
     let productarray = [];
     for (let i = 0; i < productid.length; i++) {
       productarray.push(productid[i].productid);

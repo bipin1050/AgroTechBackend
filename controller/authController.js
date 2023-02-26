@@ -42,7 +42,6 @@ module.exports.login = async function loginUser(req, res) {
           let uid = user["_id"];
           let token = jwt.sign({ payload: uid }, JWT_KEY);
           res.cookie("login", token, { httpOnly: true });
-          console.log(req.cookies.login);
           return res.status(200).json({
             message:
               "User logged in succesfully loginUser authController controller",
@@ -76,11 +75,8 @@ module.exports.login = async function loginUser(req, res) {
 module.exports.protectRoute = async function protectRoute(req, res, next) {
   try {
     let token = req.body.headers.authorization;
-    console.log(token);
     if (token) {
-      // console.log(req.cookies);
       let payload = jwt.verify(token, JWT_KEY);
-      console.log(payload);
       if (payload) {
         const user = await userModel.findById(payload.payload);
         req.role = user.role;
