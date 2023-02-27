@@ -1,5 +1,6 @@
 const cartModel = require("../models/cartModel");
 const planModel = require("../models/planModel");
+const userModel = require("../models/userModel");
 
 module.exports.getAllPlans = async function getAllPlans(req, res) {
   try {
@@ -49,15 +50,13 @@ module.exports.getPlan = async function getPlan(req, res) {
 module.exports.getCart = async function getCart(req, res) {
   try {
     let userid = req.id;
-    console.log(userid);
+
     const productid = await cartModel.find({ userid: userid });
-    console.log(productid);
     let productarray = [];
     for (let i = 0; i < productid.length; i++) {
       productarray.push(productid[i].productid);
     }
     let products = [];
-    console.log(productarray);
     for (let i = 0; i < productarray.length; i++) {
       let product = await planModel.findById(productarray[i]);
       products.push(product);
@@ -77,12 +76,23 @@ module.exports.addCart = async function addCart(req, res) {
   try {
     let userid = req.id;
     let productid = req.body.productid;
+    let checkProduct = await cartModel.find({
+      userid: userid,
+      productid: productid,
+    });
+
+    if (checkProduct.length >= 1) {
+      return res.status(400).json({
+        message: "Item already in cart addCart planController controller",
+        data: productid,
+      });
+    }
     let product = {
       userid: userid,
       productid: productid,
     };
     let createdData = await cartModel.create(product);
-    return res.json({
+    return res.status(200).json({
       message: "Added to cart successfully addCart planController controller",
       data: createdData,
     });
@@ -95,9 +105,13 @@ module.exports.addCart = async function addCart(req, res) {
 
 module.exports.deleteCart = async function deleteCart(req, res) {
   try {
-    let id = req.params.id;
-    let deletedPlan = await cartModel.findByIdAndDelete(id);
-    return res.json({
+    let productid = req.params.id;
+    let userid = req.id;
+    let deletedPlan = await cartModel.findOneAndDelete({
+      userid: userid,
+      productid: productid,
+    });
+    return res.status(200).json({
       message: "Plan deleted successfully deletePlan planController controller",
       data: deletedPlan,
     });
@@ -107,12 +121,13 @@ module.exports.deleteCart = async function deleteCart(req, res) {
     });
   }
 };
+
 module.exports.createPlan = async function createPlan(req, res) {
   try {
     req.body.userid = req.id;
     let planData = req.body;
     let createdData = await planModel.create(planData);
-    return res.json({
+    return res.status(200).json({
       message: "Plan created successfully createPlan planController controller",
       data: createdData,
     });
@@ -126,7 +141,7 @@ module.exports.createPlan = async function createPlan(req, res) {
 module.exports.getPlanByFarmer = async function getPlanByFarmer(req, res) {
   try {
     let data = await planModel.find({ userid: req.id });
-    return res.json({
+    return res.status(200).json({
       message:
         "Data fetched from a specific farmer getPlanByFarmer planController controller",
       data: data,
@@ -143,7 +158,7 @@ module.exports.deletePlan = async function deletePlan(req, res) {
   try {
     let id = req.params.id;
     let deletedPlan = await planModel.findByIdAndDelete(id);
-    return res.json({
+    return res.status(200).json({
       message: "Plan deleted successfully deletePlan planController controller",
       data: deletedPlan,
     });
@@ -167,7 +182,7 @@ module.exports.updatePlan = async function updatePlan(req, res) {
       plan[keys[i]] = dataToBeUpdated[keys[i]];
     }
     await plan.save();
-    return res.json({
+    return res.status(200).json({
       message: "Plan updated successfully updatePlan planController controller",
       data: plan,
     });
