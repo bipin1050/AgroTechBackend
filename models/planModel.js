@@ -19,13 +19,17 @@ const planSchema = new mongoose.Schema({
     unique: true,
     maxLength: [20, "Plan name should not exceed more than 20 characters"],
   },
-  duration: {
+  quantity: {
     type: Number,
     required: true,
   },
   price: {
     type: Number,
     required: [true, "Price not entered"],
+  },
+  duration: {
+    type: Number,
+    required: true,
   },
   ratingsAverage: {
     type: Number,
