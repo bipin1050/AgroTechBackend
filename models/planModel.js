@@ -16,7 +16,6 @@ const planSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
     maxLength: [20, "Plan name should not exceed more than 20 characters"],
   },
   quantity: {
