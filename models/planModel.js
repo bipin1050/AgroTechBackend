@@ -23,6 +23,10 @@ const planSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  unit: {
+    type: String,
+    required: true
+  },
   price: {
     type: Number,
     required: [true, "Price not entered"],
