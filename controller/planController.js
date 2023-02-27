@@ -93,6 +93,21 @@ module.exports.addCart = async function addCart(req, res) {
   }
 };
 
+module.exports.deleteCart = async function deleteCart(req, res) {
+  try {
+    let productid = req.params.id;
+    let userid=req.id
+    let deletedPlan = await planModel.deleteOne({userid:userid,productid:productid});
+    return res.json({
+      message: "Plan deleted successfully deletePlan planController controller",
+      data: deletedPlan,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
 module.exports.createPlan = async function createPlan(req, res) {
   try {
     req.body.userid = req.id;
