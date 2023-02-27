@@ -95,9 +95,8 @@ module.exports.addCart = async function addCart(req, res) {
 
 module.exports.deleteCart = async function deleteCart(req, res) {
   try {
-    let productid = req.params.id;
-    let userid=req.id
-    let deletedPlan = await planModel.deleteOne({userid:userid,productid:productid});
+    let id = req.params.id;
+    let deletedPlan = await cartModel.findByIdAndDelete(id);
     return res.json({
       message: "Plan deleted successfully deletePlan planController controller",
       data: deletedPlan,
