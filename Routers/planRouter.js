@@ -23,7 +23,7 @@ planRouter.route("/plan/:id").get(getPlan);
 
 planRouter.route("/getCart").post(getCart);
 planRouter.route("/addCart").post(addCart);
-planRouter.route("/deleteCart/:id").delete(deleteCart)
+planRouter.route("/deleteCart/:id").post(deleteCart)
 
 planRouter.use(isAuthorised(["admin", "farmer"]));
 planRouter.route("/crudPlan").post(createPlan);
