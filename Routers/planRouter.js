@@ -13,13 +13,13 @@ const {
   top3Plans,
   getCart,
   addCart,
-  deleteCart
+  deleteCart,
 } = require("../controller/planController");
 
 planRouter.route("/allPlans/:id").get(getAllPlans);
 
-planRouter.use(protectRoute);
 planRouter.route("/plan/:id").get(getPlan);
+planRouter.use(protectRoute);
 
 planRouter.route("/getCart").post(getCart);
 planRouter.route("/addCart").post(addCart);
