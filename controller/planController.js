@@ -169,6 +169,32 @@ module.exports.deletePlan = async function deletePlan(req, res) {
   }
 };
 
+module.exports.buyProduct= async (req,res)=>{
+  try{
+    let {productid,number}=req.body;
+    let availableproduct=await planModel.findById(productid)
+    //console.log(availableproduct)
+    if(availableproduct.quantity<number){
+      res.status(400).json({message:"Available Product low in stock"})
+    }
+    else if(availableproduct.quantity>number){
+      console.log(availableproduct.quantity,number)
+      let temp=availableproduct.quantity-number
+      let updated= await planModel.findByIdAndUpdate(productid,{quantity:temp}, { new: true })
+      res.status(200).json({message:"Successful purchase"})
+    }
+    else if(availableproduct.quantity===number){
+      await planModel.findByIdAndDelete(productid)
+      res.status(200).json({message:"Product purchased and deleted"})
+    }
+  }
+  catch(err){
+    res.status(500).json({
+      message:"Error in buyProduct"
+    })
+  }
+}
+
 module.exports.updatePlan = async function updatePlan(req, res) {
   try {
     let id = req.params.id;
