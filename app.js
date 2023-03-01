@@ -14,6 +14,7 @@ app.listen(8000);
 const cartModel = require("./models/cartModel");
 const userModel = require("./models/userModel");
 const planModel = require("./models/planModel");
+const statusModel = require("./models/statusModel");
 
 const userRouter = require("./Routers/userRouter");
 const planRouter = require("./Routers/planRouter");
