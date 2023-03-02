@@ -3,7 +3,7 @@ const app = express();
 app.use(express.json()); // Global Middleware
 
 var cors = require("cors");
-var path = require('path')
+var path = require("path");
 app.use(cors());
 
 const cookieParser = require("cookie-parser");
@@ -20,11 +20,13 @@ const userRouter = require("./Routers/userRouter");
 const planRouter = require("./Routers/planRouter");
 const reviewRouter = require("./Routers/reviewRouter");
 const bookingRouter = require("./Routers/bookingRouter");
-var htmlpath=path.join(__dirname,'public');
+const statusRouter = require("./Routers/statusRouter");
+var htmlpath = path.join(__dirname, "public");
 
-app.use(express.static(htmlpath))
+app.use(express.static(htmlpath));
 
 app.use("/user", userRouter); // Base Route, Router to use
 app.use("/plans", planRouter);
 app.use("/review", reviewRouter);
 app.use("/booking", bookingRouter);
+app.use("/status", statusRouter);

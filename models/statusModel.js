@@ -41,20 +41,20 @@ const statusSchema = new mongoose.Schema({
 
 const statusModel = mongoose.model("statusModel", statusSchema);
 
-(async () => {
-  let statusObj = {
-    buyerid: "63e67d83221baa346b21d30e",
-    sellerid: "63f9e99ab602e8f99e781dc4",
-    productname: "Mango",
-    quantiy: 15,
-    price: 1400,
-    status: "Processing",
-  };
-  let data = await statusModel.create(statusObj);
-  console.log(data);
-  // const data = new planModel(planObj);
-  // await data.save();
-  // console.log(data);
-})();
+// (async () => {
+//   let statusObj = {
+//     buyerid: "63e67d83221baa346b21d30e",
+//     sellerid: "63f9e99ab602e8f99e781dc4",
+//     productname: "Mango",
+//     quantiy: 15,
+//     price: 1400,
+//     status: "Processing",
+//   };
+//   let data = await statusModel.create(statusObj);
+//   console.log(data);
+//   // const data = new planModel(planObj);
+//   // await data.save();
+//   // console.log(data);
+// })();
 
 module.exports = statusModel;

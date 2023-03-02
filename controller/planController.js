@@ -186,14 +186,13 @@ module.exports.buyProduct = async (req, res) => {
         productid: productid,
       });
       await statusModel.create({
-        buyerid:req.id,
+        buyerid: req.id,
         sellerid: availableproduct.userid,
         productname: availableproduct.name,
         quantiy: number,
         price: availableproduct.price,
-        
-
-      })
+        status: "Processing"
+      });
       res.status(200).json({ message: "Successful purchase" });
     } else if (availableproduct.quantity === number) {
       await planModel.findByIdAndDelete(productid);
