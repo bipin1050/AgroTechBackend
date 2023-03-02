@@ -58,6 +58,14 @@ const userSchema = mongoose.Schema({
     type: String,
     dafault: "img/users/dafault.jpeg",
   },
+  licenceNumber: {
+    type: String,
+  },
+  availability: {
+    type: String,
+    enum: ["Offline", "Online", "Busy", "Delivering: On the way"],
+    default: "Offline",
+  },
   resetToken: String,
 });
 
@@ -101,10 +109,13 @@ module.exports = userModel;
 
 // (async function createUser() {
 //   let user = {
-//     name: "Bishal",
-//     email: "bishal@gmail.com",
+//     name: "Pradip",
+//     email: "pradip@gmail.com",
 //     password: "12345678",
-//     confirmPassword: "12345678",
+//     latitude: 78.396591,
+//     longitude: 29.454,
+//     licenceNumber: "234343",
+//     availability: "Online",
 //   };
 //   let data = await userModel.create(user);
 //   console.log(data);

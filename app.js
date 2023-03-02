@@ -21,8 +21,8 @@ const planRouter = require("./Routers/planRouter");
 const reviewRouter = require("./Routers/reviewRouter");
 const bookingRouter = require("./Routers/bookingRouter");
 const statusRouter = require("./Routers/statusRouter");
-var htmlpath = path.join(__dirname, "public");
 
+var htmlpath = path.join(__dirname, "public");
 app.use(express.static(htmlpath));
 
 app.use("/user", userRouter); // Base Route, Router to use

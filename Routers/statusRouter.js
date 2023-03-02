@@ -5,14 +5,21 @@ const statusRouter = express.Router();
 const { protectRoute, isAuthorised } = require("../controller/authController");
 
 const {
-  getStatusFarmer,
-  changeStatusFarmer,
+  seeProductStatusByFarmer,
+  changeProductStatusbyTrucker,
+  seeOnlineTruckerStatusByFarmer,
 } = require("../controller/statusController");
 
 statusRouter.use(protectRoute);
-statusRouter.route("/getStatusFarmer").post(getStatusFarmer);
-statusRouter.route("/changeStatusFarmer").post(changeStatusFarmer);
 
-// statusRouter.route("/getStatusTrucker").post(getStatusTrucker);
+statusRouter
+  .route("/changeProductStatusbyTrucker")
+  .post(changeProductStatusbyTrucker);
+
+statusRouter.use(isAuthorised(["farmer"]));
+statusRouter.route("/seeProductStatusByFarmer").post(seeProductStatusByFarmer);
+statusRouter
+  .route("/seeOnlineTruckerStatusByFarmer")
+  .post(seeOnlineTruckerStatusByFarmer);
 
 module.exports = statusRouter;

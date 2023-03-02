@@ -40,7 +40,9 @@ module.exports.login = async function loginUser(req, res) {
       if (user) {
         if (user.password == data.password) {
           let uid = user["_id"];
-          let token = jwt.sign({ payload: uid }, JWT_KEY);
+          let token = jwt.sign({ payload: uid }, JWT_KEY, {
+            expiresIn: "5 days",
+          });
           res.cookie("login", token, { httpOnly: true });
           return res.status(200).json({
             message:
