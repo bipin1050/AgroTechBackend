@@ -1,7 +1,7 @@
 const cartModel = require("../models/cartModel");
 const planModel = require("../models/planModel");
 const userModel = require("../models/userModel");
-
+const statusModel = require("../models/statusModel");
 module.exports.getAllPlans = async function getAllPlans(req, res) {
   try {
     let skipby = req.params.id * 10;
@@ -185,6 +185,15 @@ module.exports.buyProduct = async (req, res) => {
         userid: req.id,
         productid: productid,
       });
+      await statusModel.create({
+        buyerid:req.id,
+        sellerid: availableproduct.userid,
+        productname: availableproduct.name,
+        quantiy: number,
+        price: availableproduct.price,
+        
+
+      })
       res.status(200).json({ message: "Successful purchase" });
     } else if (availableproduct.quantity === number) {
       await planModel.findByIdAndDelete(productid);

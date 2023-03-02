@@ -45,10 +45,10 @@ const statusModel = mongoose.model("statusModel", statusSchema);
   let statusObj = {
     buyerid: "63e67d83221baa346b21d30e",
     sellerid: "63f9e99ab602e8f99e781dc4",
-    productname: "Apple",
-    quantiy: 14,
+    productname: "Mango",
+    quantiy: 15,
     price: 1400,
-    status: "Delivered",
+    status: "Processing",
   };
   let data = await statusModel.create(statusObj);
   console.log(data);
