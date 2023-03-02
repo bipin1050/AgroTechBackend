@@ -14,7 +14,7 @@ statusRouter.use(protectRoute);
 
 statusRouter
   .route("/changeProductStatusbyTrucker")
-  .post(changeProductStatusbyTrucker);
+  .post(isAuthorised(["trucker"]),changeProductStatusbyTrucker);
 
 statusRouter.use(isAuthorised(["farmer"]));
 statusRouter.route("/seeProductStatusByFarmer").post(seeProductStatusByFarmer);
