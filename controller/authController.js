@@ -3,7 +3,6 @@ const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const JWT_KEY = require("../secrets");
 const { sendMail } = require("../utility/nodemailer");
-const { includes } = require("lodash");
 
 // Signup
 module.exports.signup = async function signUp(req, res) {
@@ -86,11 +85,31 @@ module.exports.protectRoute = async function protectRoute(req, res, next) {
         next();
       }
     } else {
-      // Browser
-      const client = req.get("User-Agent");
-      if ((client, includes("Mozilla" == true))) {
-        return res.status(400).redirect("/login");
+      // Postman
+      res.status(400).json({
+        message: "Please login protectRoute authController controller",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: "failed to authorize",
+    });
+  }
+};
+
+//Added because protectroute had issue handling form data validation
+module.exports.protectRouteForm = async function protectRouteForm(req, res, next) {
+  try {
+    let token = req.headers.authorization;
+    if (token) {
+      let payload = jwt.verify(token, JWT_KEY);
+      if (payload) {
+        const user = await userModel.findById(payload.payload);
+        req.role = user.role;
+        req.id = user.id;
+        next();
       }
+    } else {
       // Postman
       res.status(400).json({
         message: "Please login protectRoute authController controller",

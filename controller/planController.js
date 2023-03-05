@@ -3,6 +3,7 @@ const planModel = require("../models/planModel");
 const userModel = require("../models/userModel");
 const statusModel = require("../models/statusModel");
 const categoryModel = require("../models/categorymodel");
+const multer = require("multer");
 
 module.exports.getAllPlans = async function getAllPlans(req, res) {
   try {
@@ -137,9 +138,36 @@ module.exports.deleteCart = async function deleteCart(req, res) {
   }
 };
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images");
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname +
+        "-" +
+        Date.now() +
+        "." +
+        file.originalname.split(".").pop()
+    );
+  },
+});
+
+module.exports.upload = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    if (!file.mimetype.startsWith("image/")) {
+      return cb(new Error("Only image files are allowed!"));
+    }
+    cb(null, true);
+  },
+});
+
 module.exports.createPlan = async function createPlan(req, res) {
   try {
     req.body.userid = req.id;
+    req.body.image=req.file.filename
     let planData = req.body;
     let createdData = await planModel.create(planData);
     return res.status(200).json({

@@ -31,6 +31,10 @@ const planSchema = new mongoose.Schema({
     required: true,
     maxLength: [20, "Plan name should not exceed more than 20 characters"],
   },
+  image:{
+	type:String,
+	default:'img.jpg'
+  },
   price: {
     type: Number,
     required: [true, "Price not entered"],
