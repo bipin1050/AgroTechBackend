@@ -43,8 +43,8 @@ const userSchema = mongoose.Schema({
   // },
   role: {
     type: String,
-    enum: ["admin", "retailer", "farmer", "trucker"],
-    dafault: "retailer",
+    enum: ["admin", "retailer/wholesaler", "farmer", "trucker"],
+    dafault: "retailer/wholesaler/wholesaler",
   },
   latitude: {
     type: Number,
