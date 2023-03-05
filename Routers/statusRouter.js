@@ -12,9 +12,7 @@ const {
 
 statusRouter.use(protectRoute);
 
-statusRouter
-  .route("/seeProductStatus")
-  .post(isAuthorised(["farmer", "retailer"]), seeProductStatus);
+statusRouter.route("/seeProductStatus").post(seeProductStatus);
 
 statusRouter
   .route("/seeOnlineTruckerStatus")
