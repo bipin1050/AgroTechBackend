@@ -21,7 +21,7 @@ const {
 planRouter.route("/allPlans/:id").get(getAllPlans);
 
 planRouter.route("/plan/:id").get(getPlan);
-planRouter.route("/category").get(getCategory);
+planRouter.route("/getCategory").get(getCategory);
 
 planRouter.use(protectRoute);
 
