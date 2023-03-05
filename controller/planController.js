@@ -2,6 +2,8 @@ const cartModel = require("../models/cartModel");
 const planModel = require("../models/planModel");
 const userModel = require("../models/userModel");
 const statusModel = require("../models/statusModel");
+const categoryModel = require("../models/categorymodel");
+
 module.exports.getAllPlans = async function getAllPlans(req, res) {
   try {
     let skipby = req.params.id * 10;
@@ -40,6 +42,20 @@ module.exports.getPlan = async function getPlan(req, res) {
         message: "Plan not found getPlan planController controller",
       });
     }
+  } catch (err) {
+    res.status(500).json({
+      message: "Error faced",
+    });
+  }
+};
+
+module.exports.getCategory = async function getCategory(req, res) {
+  try {
+    let category = await categoryModel.find();
+    res.status(200).json({
+      message: "Categories added",
+      data: category,
+    });
   } catch (err) {
     res.status(500).json({
       message: "Error faced",
@@ -191,7 +207,7 @@ module.exports.buyProduct = async (req, res) => {
         productname: availableproduct.name,
         quantiy: number,
         price: availableproduct.price,
-        status: "Processing"
+        status: "Processing",
       });
       res.status(200).json({ message: "Successful purchase" });
     } else if (availableproduct.quantity === number) {

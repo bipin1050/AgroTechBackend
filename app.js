@@ -11,11 +11,6 @@ app.use(cookieParser());
 
 app.listen(8000);
 
-const cartModel = require("./models/cartModel");
-const userModel = require("./models/userModel");
-const planModel = require("./models/planModel");
-const statusModel = require("./models/statusModel");
-
 const userRouter = require("./Routers/userRouter");
 const planRouter = require("./Routers/planRouter");
 const reviewRouter = require("./Routers/reviewRouter");
@@ -53,7 +48,7 @@ const upload = multer({
 });
 
 app.get("/multer", async (req, res) => {
-  res.sendFile(path.join(__dirname,'dmulter.html'));
+  res.sendFile(path.join(__dirname, "dmulter.html"));
 });
 
 app.post("/upload", upload.single("image"), function (req, res, next) {

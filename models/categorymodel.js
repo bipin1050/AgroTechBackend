@@ -6,7 +6,7 @@ mongoose
   .connect(db_link)
   .then(function (db) {
     // console.log(db);
-    console.log("plan db connected");
+    console.log("category db connected");
   })
   .catch(function (err) {
     console.log(err);
@@ -21,15 +21,15 @@ const categorySchema = new mongoose.Schema({
 
 const categoryModel = mongoose.model("categoryModel", categorySchema);
 
-(async function createPlan() {
-  let categoryObj = {
-    name: "Pickles, Jams & Ketchups",
-  };
-  let data = await categoryModel.create(categoryObj);
-  console.log(data);
-  //   const data = new planModel(planObj);
-  //   await data.save();
-  //   console.log(data);
-})();
+// (async function createPlan() {
+//   let categoryObj = {
+//     name: "Pickles, Jams & Ketchups",
+//   };
+//   let data = await categoryModel.create(categoryObj);
+//   console.log(data);
+//   //   const data = new planModel(planObj);
+//   //   await data.save();
+//   //   console.log(data);
+// })();
 
 module.exports = categoryModel;

@@ -14,18 +14,21 @@ const {
   getCart,
   addCart,
   deleteCart,
-  buyProduct
+  buyProduct,
+  getCategory,
 } = require("../controller/planController");
 
 planRouter.route("/allPlans/:id").get(getAllPlans);
 
 planRouter.route("/plan/:id").get(getPlan);
+planRouter.route("/category").get(getCategory);
+
 planRouter.use(protectRoute);
 
 planRouter.route("/getCart").post(getCart);
 planRouter.route("/addCart").post(addCart);
-planRouter.route("/deleteCart/:id").post(deleteCart)
-planRouter.route("/buyProduct").post(buyProduct)
+planRouter.route("/deleteCart/:id").post(deleteCart);
+planRouter.route("/buyProduct").post(buyProduct);
 
 planRouter.use(isAuthorised(["admin", "farmer"]));
 planRouter.route("/crudPlan").post(createPlan);
