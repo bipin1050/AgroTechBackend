@@ -37,32 +37,32 @@ userRouter.route("/logout").get(logout);
 
 userRouter.route("/isLogin").post(isLogin);
 
-const multerStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "/public/images");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
+// const multerStorage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "/public/images");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//   },
+// });
 
-const filter = function (req, file, cb) {
-  if (file.mimetype.startsWith("image")) {
-    cb(null, true);
-  } else {
-    cb(new Error("Not an image file! Please upload an image."), false);
-  }
-};
+// const filter = function (req, file, cb) {
+//   if (file.mimetype.startsWith("image")) {
+//     cb(null, true);
+//   } else {
+//     cb(new Error("Not an image file! Please upload an image."), false);
+//   }
+// };
 
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: filter,
-});
+// const upload = multer({
+//   storage: multerStorage,
+//   fileFilter: filter,
+// });
 
-userRouter.post("/ProfileImage", upload.single("photo"), updateProfileImage);
-userRouter.get("/ProfileImage", (req, res) => {
-  res.sendFile("/home/bigyan/Desktop/test/test/multer.html");
-});
+// userRouter.post("/ProfileImage", upload.single("photo"), updateProfileImage);
+// userRouter.get("/ProfileImage", (req, res) => {
+//   res.sendFile("/home/bigyan/Desktop/test/test/multer.html");
+// });
 
 // Profile Page
 userRouter.use(protectRoute);
