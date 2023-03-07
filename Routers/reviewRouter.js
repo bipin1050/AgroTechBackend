@@ -10,13 +10,16 @@ const {
   createReview,
   updateReview,
   deleteReview,
+  getBlogs,
 } = require("../controller/reviewController");
 
 reviewRouter.route("/all").get(getAllReviews);
 
 reviewRouter.route("/top3").get(top3Reviews);
 
+reviewRouter.route("/getBlogs").get(getBlogs)
 reviewRouter.route("/:id").get(getPlanReviews);
+
 
 reviewRouter.use(protectRoute);
 reviewRouter

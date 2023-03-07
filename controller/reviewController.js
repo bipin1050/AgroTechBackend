@@ -1,5 +1,6 @@
 const reviewModel = require("../models/reviewModel");
 const planModel = require("../models/planModel");
+const blogModel= require("../models/blogModel")
 
 module.exports.getAllReviews = async function getAllReviews(req, res) {
   try {
@@ -125,3 +126,18 @@ module.exports.deleteReview = async function deleteReview(req, res) {
     });
   }
 };
+
+module.exports.getBlogs = async (req,res)=>{
+  try{
+    console.log(req.body)
+    let blogs=await blogModel.find().select('title author publicationDate')
+    res.status(200).json({
+      message:"Got blogs getBlogs reviewController controller",
+      blogs:blogs
+    })
+  }catch(err){
+    res.status(500).json({
+      message:"Custom error"
+    })
+  }
+}
