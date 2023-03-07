@@ -11,6 +11,7 @@ const {
   updateReview,
   deleteReview,
   getBlogs,
+  getBlogsById
 } = require("../controller/reviewController");
 
 reviewRouter.route("/all").get(getAllReviews);
@@ -18,6 +19,7 @@ reviewRouter.route("/all").get(getAllReviews);
 reviewRouter.route("/top3").get(top3Reviews);
 
 reviewRouter.route("/getBlogs").get(getBlogs)
+reviewRouter.route("/getBlogs/:id").get(getBlogsById)
 reviewRouter.route("/:id").get(getPlanReviews);
 
 

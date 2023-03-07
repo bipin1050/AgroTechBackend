@@ -141,3 +141,19 @@ module.exports.getBlogs = async (req,res)=>{
     })
   }
 }
+
+module.exports.getBlogsById = async (req,res)=>{
+  try{
+    const id=req.params.id
+    console.log(req.body)
+    let blogs=await blogModel.findById(id)
+    res.status(200).json({
+      message:"Got blogs getBlogs reviewController controller",
+      blogs:blogs
+    })
+  }catch(err){
+    res.status(500).json({
+      message:"Custom error"
+    })
+  }
+}
