@@ -256,11 +256,12 @@ module.exports.buyProduct = async (req, res) => {
 module.exports.updatePlan = async function updatePlan(req, res) {
   try {
     let id = req.params.id;
-    let dataToBeUpdated = req.body;
+    let dataToBeUpdated = req.body.editProduct;
     let keys = [];
     for (let key in dataToBeUpdated) {
       keys.push(key);
     }
+    console.log(keys)
     let plan = await planModel.findById(id);
     for (let i = 0; i < keys.length; i++) {
       plan[keys[i]] = dataToBeUpdated[keys[i]];
