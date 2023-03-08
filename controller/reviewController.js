@@ -140,7 +140,8 @@ module.exports.createBlogs=async (req,res)=>{
       title:title,
       author:author,
       highlights:highlights,
-      content:content
+      content:content,
+      image:req.file.filename
     })
     res.status(200).json({
       message:"Blog created createBlogs reviewController controller",
