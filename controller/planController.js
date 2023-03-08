@@ -3,7 +3,7 @@ const planModel = require("../models/planModel");
 const userModel = require("../models/userModel");
 const statusModel = require("../models/statusModel");
 const categoryModel = require("../models/categorymodel");
-const multer = require("multer");
+const { upload } = require("../utility/multer");
 
 module.exports.getAllPlans = async function getAllPlans(req, res) {
   try {
@@ -138,36 +138,10 @@ module.exports.deleteCart = async function deleteCart(req, res) {
   }
 };
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/images");
-  },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname +
-        "-" +
-        Date.now() +
-        "." +
-        file.originalname.split(".").pop()
-    );
-  },
-});
-
-module.exports.upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    if (!file.mimetype.startsWith("image/")) {
-      return cb(new Error("Only image files are allowed!"));
-    }
-    cb(null, true);
-  },
-});
-
 module.exports.createPlan = async function createPlan(req, res) {
   try {
     req.body.userid = req.id;
-    req.body.image=req.file.filename
+    req.body.image = req.file.filename;
     let planData = req.body;
     let createdData = await planModel.create(planData);
     return res.status(200).json({
@@ -201,7 +175,10 @@ module.exports.deletePlan = async function deletePlan(req, res) {
   try {
     let id = req.params.id;
     let deletedPlan = await planModel.findByIdAndDelete(id);
-    let cartPlan = await cartModel.findOneAndDelete({userid:req.id,productid:id})
+    let cartPlan = await cartModel.findOneAndDelete({
+      userid: req.id,
+      productid: id,
+    });
     return res.status(200).json({
       message: "Plan deleted successfully deletePlan planController controller",
       data: deletedPlan,
@@ -262,7 +239,7 @@ module.exports.updatePlan = async function updatePlan(req, res) {
     for (let key in dataToBeUpdated) {
       keys.push(key);
     }
-    console.log(keys)
+    console.log(keys);
     let plan = await planModel.findById(id);
     for (let i = 0; i < keys.length; i++) {
       plan[keys[i]] = dataToBeUpdated[keys[i]];
