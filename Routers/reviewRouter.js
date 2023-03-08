@@ -25,7 +25,7 @@ reviewRouter.route("/getBlogs").get(getBlogs)
 reviewRouter.route("/getBlogs/:id").get(getBlogsById)
 reviewRouter.route("/:id").get(getPlanReviews);
 
-reviewRouter.route('/createBlogs').post(protectRouteForm,isAuthorised(['Admin']),upload.single("image"),createBlogs)
+reviewRouter.route('/createBlogs').post(protectRouteForm,isAuthorised(['admin']),upload.single("image"),createBlogs)
 
 reviewRouter.use(protectRoute);
 reviewRouter
