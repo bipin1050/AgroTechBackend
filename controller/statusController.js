@@ -64,10 +64,10 @@ module.exports.seeOnlineTruckerStatus = async function seeOnlineTruckerStatus(
 
 module.exports.postNotification = async (req,res)=>{
   try{
-    const {notification}=req.body
+    const {notification,role}=req.body
     const notify=await notificationModel.create({notification:notification})
     const notifyid=notify._id.toHexString()
-    const user=await userModel.find().select('_id')
+    const user=await userModel.find({role:role}).select('_id')
     const users=[]
     for(let i=0;i<user.length;i++){
       users.push(user[i]._id.toHexString())
