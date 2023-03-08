@@ -2,7 +2,11 @@ const express = require("express");
 
 const planRouter = express.Router();
 
-const { protectRoute, isAuthorised,protectRouteForm } = require("../controller/authController");
+const {
+  protectRoute,
+  isAuthorised,
+  protectRouteForm,
+} = require("../controller/authController");
 const {
   getAllPlans,
   getPlan,
@@ -16,15 +20,23 @@ const {
   deleteCart,
   buyProduct,
   getCategory,
-  upload,
 } = require("../controller/planController");
+
+const { upload } = require("../utility/multer");
 
 planRouter.route("/allPlans/:id").get(getAllPlans);
 
 planRouter.route("/plan/:id").get(getPlan);
 planRouter.route("/getCategory").get(getCategory);
 
-planRouter.route("/crudPlan").post(protectRouteForm,isAuthorised(["admin", "farmer"]),upload.single("image"),createPlan);
+planRouter
+  .route("/crudPlan")
+  .post(
+    protectRouteForm,
+    isAuthorised(["admin", "farmer"]),
+    upload.single("image"),
+    createPlan
+  );
 planRouter.use(protectRoute);
 
 planRouter.route("/getCart").post(getCart);
