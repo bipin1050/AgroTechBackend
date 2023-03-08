@@ -15,7 +15,7 @@ const {
   createBlogs
 } = require("../controller/reviewController");
 
-const {upload}=require("../controller/planController")
+const {upload}=require("../utility/multer");
 
 reviewRouter.route("/all").get(getAllReviews);
 
