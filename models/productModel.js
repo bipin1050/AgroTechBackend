@@ -29,17 +29,17 @@ const productSchema = new mongoose.Schema({
 
 const productModel = mongoose.model("productModel", productSchema);
 
-(async function createPlan() {
-    // for(let i=0;i<product.product.length;i++){
-    //     await productModel.create(product.product[i])
-    //     console.log("done")
-    // }
-    console.log(await productModel.count())
-  //let data = await productModel.create(product);
-  //console.log(data);
-    // const data = new planModel(planObj);
-    // await data.save();
-    // console.log(data);
-})();
+// (async function createPlan() {
+//     // for(let i=0;i<product.product.length;i++){
+//     //     await productModel.create(product.product[i])
+//     //     console.log("done")
+//     // }
+//     console.log(await productModel.count())
+//   //let data = await productModel.create(product);
+//   //console.log(data);
+//     // const data = new planModel(planObj);
+//     // await data.save();
+//     // console.log(data);
+// })();
 
 module.exports = productModel;

@@ -85,7 +85,7 @@ module.exports.postNotification = async (req,res)=>{
 module.exports.getNotification = async (req,res)=>{
   try{
     const id=req.id;
-    notification=await notificationStatusModel.find({userId:id})
+    notification=await notificationStatusModel.find({userId:id}).sort({_id:-1}).limit(10)
     let count=0;
     for(let i=0;i<notification.length;i++){
       if(notification[i].status===1){

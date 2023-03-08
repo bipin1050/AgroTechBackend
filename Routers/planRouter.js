@@ -20,6 +20,8 @@ const {
   deleteCart,
   buyProduct,
   getCategory,
+  productHelper,
+  productList
 } = require("../controller/planController");
 
 const { upload } = require("../utility/multer");
@@ -45,7 +47,8 @@ planRouter.route("/deleteCart/:id").post(deleteCart);
 planRouter.route("/buyProduct").post(buyProduct);
 
 planRouter.use(isAuthorised(["admin", "farmer"]));
-
+planRouter.route("/productList").post(productList)
+planRouter.route("/productHelper").post(productHelper)
 planRouter.route("/crudPlan/farmer").post(getPlanByFarmer);
 
 planRouter.route("/crudPlan/:id").patch(updatePlan).delete(deletePlan);

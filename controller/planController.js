@@ -3,6 +3,7 @@ const planModel = require("../models/planModel");
 const userModel = require("../models/userModel");
 const statusModel = require("../models/statusModel");
 const categoryModel = require("../models/categorymodel");
+const productModel=require("../models/productModel")
 const { upload } = require("../utility/multer");
 
 module.exports.getAllPlans = async function getAllPlans(req, res) {
@@ -63,6 +64,31 @@ module.exports.getCategory = async function getCategory(req, res) {
     });
   }
 };
+
+module.exports.productList=async (req,res)=>{
+  try{
+    const product=await productModel.find().select('name')
+    res.status(200).json({
+      message:"Got product list",
+      product:product
+    })
+  }catch(err){
+    res.status(500).json({message:err.message})
+  }
+}
+
+module.exports.productHelper=async (req,res)=>{
+  try{
+    let productId=req.body.productId
+    let category=await productModel.findById(productId).select('category unit')
+    res.status(200).json({
+      message:"Get category and unit",
+      category:category
+    })
+  }catch(err){
+      res.status(500).status({message:err.message})
+  }
+}
 
 module.exports.getCart = async function getCart(req, res) {
   try {
