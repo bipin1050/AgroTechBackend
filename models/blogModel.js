@@ -24,8 +24,12 @@ mongoose
         type:Date,
         default:Date()
     },
-    content:{
+    highlights:{
         type:String,
+        required:true
+    },
+    content:{
+        type:[String],
         required:true
     }
   })
@@ -33,20 +37,19 @@ mongoose
   const blogModel = mongoose.model("blogModel",blogSchema);
   module.exports=blogModel;
 
-//   (async ()=>{
-//     let blog={
-//         title:"Good morning dharan",
-//         author:"Admin",
-//         content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed velit nibh. Sed eget elementum enim. Aliquam pulvinar maximus fringilla. Maecenas viverra purus id lorem ullamcorper convallis. Donec congue bibendum iaculis. Maecenas ac enim ultricies magna iaculis convallis imperdiet eu lectus. Mauris eleifend, arcu et ultricies euismod, quam tortor euismod ligula, ac gravida nisl lectus vel quam. Pellentesque non urna massa. Morbi fringilla libero a imperdiet sollicitudin. Cras porta est in nibh egestas, ac euismod ipsum lacinia. Donec mollis mollis cursus. Cras non bibendum odio, eu mattis enim. Suspendisse a mattis mauris. Proin vehicula faucibus odio, ac eleifend purus condimentum in. Vivamus elementum magna vel ante ornare tempus. Suspendisse id laoreet mauris, ac sollicitudin tortor./nUt sagittis et lectus non placerat. Aliquam in diam vel erat ultricies pretium ut et sapien. Suspendisse nisi elit, ullamcorper eu augue et, vehicula pulvinar turpis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur auctor hendrerit justo, et molestie tortor. Proin non efficitur ante. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean suscipit purus et orci bibendum egestas. Proin imperdiet quis tellus id dictum. Morbi sed venenatis metus. Proin tincidunt, urna eu volutpat semper, dui sem lacinia enim, sed laoreet enim eros quis urna. Aliquam maximus luctus ipsum eu ultricies. Pellentesque at nisi quis quam pretium cursus ut nec orci. In tristique facilisis mauris ac mollis. Ut at felis sit amet turpis feugiat fermentum./nDonec semper, tortor nec mattis consectetur, tortor magna ultrices tortor, id sodales nunc felis in erat. Nullam lectus lorem, dignissim vitae fringilla ac, faucibus vitae velit. Ut mauris lectus, dapibus ut accumsan a, congue ac urna. Quisque quis arcu ac ex accumsan congue. Cras pellentesque a elit eget bibendum. Phasellus aliquam magna urna, non sagittis erat sollicitudin nec. Suspendisse fringilla tortor a magna mattis volutpat. Fusce malesuada sit amet metus sed commodo. Duis a quam interdum, pretium sem ac, mollis erat. Pellentesque pellentesque aliquet nulla. Fusce fermentum posuere odio ut hendrerit. Suspendisse luctus, nisl eu semper mollis, nunc eros sollicitudin nibh, elementum viverra lorem orci in est./nMauris pellentesque lectus vitae est finibus ornare. Nunc finibus facilisis purus, vel facilisis elit. Morbi ut arcu nisi. Quisque nibh elit, luctus et auctor nec, varius consectetur ante. In hac habitasse platea dictumst. Donec efficitur mollis est. Praesent tincidunt tristique dapibus. Nullam diam turpis, lobortis et lacinia sed, varius eget enim. Curabitur vitae velit tincidunt, accumsan purus sit amet, mollis nunc./nVestibulum nec imperdiet eros. Vivamus eu eleifend urna. Mauris bibendum neque leo, lobortis convallis nulla facilisis ut. Curabitur fringilla consequat iaculis. In turpis sapien, euismod vel risus sollicitudin, posuere ultrices tortor. Proin maximus magna vitae ligula placerat, in sodales neque iaculis. Mauris sit amet ipsum efficitur, pretium sem eget, congue urna. Nulla lacinia mi eu magna maximus molestie. Etiam sit amet lorem luctus elit consectetur egestas. Etiam eu dui eu dui elementum vulputate. Vestibulum lacinia odio vel faucibus rutrum. Morbi in ex vulputate, vehicula ligula in, pharetra tellus. Suspendisse non luctus tellus, sit amet iaculis massa. Curabitur faucibus quam tincidunt risus dapibus, et porttitor ex porta."
-//     }
-//     console.log(await blogModel.create(blog))
-//   })();
+  // (async ()=>{
+  //   let blog={
+  //       title:"Good morning dharan",
+  //       author:"Admin",
+  //       content:['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in vulputate augue, ut consequat arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sit amet risus dui. Phasellus laoreet risus sed tincidunt mollis. Aenean non dui vel augue pulvinar viverra. Nulla facilisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean bibendum metus in pellentesque laoreet. ','Mauris rutrum, orci sed iaculis vestibulum, neque lorem hendrerit est, vitae malesuada turpis nisl ac erat. Pellentesque blandit nisi arcu, vestibulum auctor magna pulvinar sed. Cras eu laoreet magna. Vivamus pharetra lacus quis tellus elementum, in volutpat quam luctus. Pellentesque eu commodo orci, ut dapibus orci. Etiam sollicitudin elit ac sodales lacinia. Donec neque nisi, suscipit imperdiet tellus eu, facilisis mattis sapien. Praesent in ex eget ligula ultrices sodales. Donec justo purus, consequat ut dui sed, mattis venenatis nisi. Proin varius maximus metus, vel sagittis odio dignissim molestie. Ut lacinia non ante at efficitur. ','Nullam ut velit fringilla, rutrum augue in, pellentesque metus. Nam non leo in massa lacinia elementum. Pellentesque nisi dolor, fringilla in nisi vel, varius finibus est. Nulla feugiat lectus justo. Praesent dignissim aliquam tortor nec facilisis. Vivamus imperdiet ultricies ornare. Nulla euismod consectetur gravida. Sed at magna ac massa pellentesque rhoncus id viverra leo. Ut congue ac enim a porta. Mauris neque erat, ultricies eget arcu eu, consequat consectetur risus. Donec id mi gravida, tempus purus a, eleifend enim. Vivamus dictum est turpis, sed feugiat quam varius a. ','Donec consectetur eros libero, id ullamcorper eros auctor ac. Morbi accumsan dui venenatis placerat congue. Nullam at dapibus justo, eget pharetra justo. Nunc tempor fermentum neque eu lacinia. Curabitur consectetur mauris dolor, quis mollis nulla sollicitudin quis. Phasellus nec lobortis dui. In hac habitasse platea dictumst. ','Pellentesque ullamcorper felis in erat imperdiet maximus. Sed vel lectus eget tortor euismod ornare quis a libero. Sed massa magna, fermentum a neque volutpat, aliquet tempus elit. Curabitur non tempus tellus. Integer maximus nibh vitae nisi accumsan ultrices. Donec justo turpis, commodo nec aliquam quis, eleifend sit amet mauris. Sed convallis lobortis risus ullamcorper pretium. Vivamus ut sapien vitae nisi egestas lacinia in in purus. Pellentesque nec lacus laoreet, aliquet est eget, tristique ipsum. Praesent iaculis quam eget orci efficitur, in faucibus dui ultricies.']
+  //   }
+  //   console.log(await blogModel.create(blog))
+  // })();
 
-//   blogModel.findById("6407106bf610bd276ca8105e")
-//   .then(article => {
-//     const paragraphs = article.content.split('/n');
-//     console.log("Paragraphs:", paragraphs);
-//   })
-//   .catch(error => {
-//     console.error("Error retrieving article:", error);
-//   });
+  // blogModel.findById("64080ecda856a68b0bc00e65")
+  // .then(article => {
+  //   console.log("Paragraphs:", article);
+  // })
+  // .catch(error => {
+  //   console.error("Error retrieving article:", error);
+  // });

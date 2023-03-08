@@ -127,6 +127,32 @@ module.exports.deleteReview = async function deleteReview(req, res) {
   }
 };
 
+module.exports.createBlogs=async (req,res)=>{
+  try{
+    author=req.role
+    let {title,highlights,content}=req.body
+    if(highlights==''){
+      for(let i=0;i<50;i++){
+        highlights=highlights+content[0][i]
+      }
+    }
+    await blogModel.create({
+      title:title,
+      author:author,
+      highlights:highlights,
+      content:content
+    })
+    res.status(200).json({
+      message:"Blog created createBlogs reviewController controller",
+
+    })
+  }catch(err){
+    res.status(500).json({
+      message:err.message
+    })
+  }
+}
+
 module.exports.getBlogs = async (req,res)=>{
   try{
     console.log(req.body)
