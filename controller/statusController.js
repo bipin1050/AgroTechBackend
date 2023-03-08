@@ -96,6 +96,7 @@ module.exports.getNotification = async (req,res)=>{
     for(let i=0;i<notification.length;i++){
       notify.push(await notificationModel.findById(notification[i].notificationId))
     }
+    console.log(notify)
     res.status(200).json({
       message:"Notification received",
       count:count,
@@ -110,10 +111,10 @@ module.exports.updateNotificationStatus= async (req,res)=>{
   try{
     const {notificationId}=req.body
     for(let i=0;i<notificationId.length;i++){
-      await notificationStatusModel.findByIdAndUpdate(notificationId[i],{status:0},{new:true})
+      await notificationStatusModel.findOneAndUpdate({userId:req.id,notificationId:notificationId[i]},{status:0},{new:true})
       res.status(200).json({message:"Successfully updated status"})
     }
   }catch(err){
-
+    req.status(500).json({message:err.message})
   }
 }
