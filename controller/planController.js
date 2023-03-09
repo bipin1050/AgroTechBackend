@@ -121,6 +121,11 @@ module.exports.addCart = async function addCart(req, res) {
   try {
     let userid = req.id;
     let productid = req.body.productid;
+    const id=await planModel.findById(productid).select('userid')
+    console.log(id.userid,userid)
+    if(id.userid===userid){
+      res.status(500).json({message:"Not allowed purchase"})
+    }
     let checkProduct = await cartModel.find({
       userid: userid,
       productid: productid,
@@ -227,6 +232,10 @@ module.exports.buyProduct = async (req, res) => {
   try {
     let { productid, number } = req.body;
     let availableproduct = await planModel.findById(productid);
+    if(availableproduct.userid===req.id)
+    {
+      res.status(500).json({message:"Can't buy the product"})
+    }
     if (availableproduct.quantity < number) {
       res.status(400).json({ message: "Available Product low in stock" });
     } else if (availableproduct.quantity > number) {
