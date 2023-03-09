@@ -80,6 +80,9 @@ module.exports.productList=async (req,res)=>{
 module.exports.productHelper=async (req,res)=>{
   try{
     let productId=req.body.productId
+    if(!productId){
+      res.status(400).json({message:"Error in input"})
+    }
     let category=await productModel.findById(productId).select('category unit')
     res.status(200).json({
       message:"Get category and unit",
