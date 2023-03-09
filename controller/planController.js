@@ -171,6 +171,10 @@ module.exports.createPlan = async function createPlan(req, res) {
   try {
     req.body.userid = req.id;
     req.body.image = req.file.filename;
+    const productId=req.body.productId
+    const name=await productModel.findById(productId).select('name')
+    delete req.body.productId
+    req.body.name=name.name
     let planData = req.body;
     let createdData = await planModel.create(planData);
     return res.status(200).json({
