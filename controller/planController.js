@@ -124,7 +124,7 @@ module.exports.addCart = async function addCart(req, res) {
     const id=await planModel.findById(productid).select('userid')
     console.log(id.userid,userid)
     if(id.userid===userid){
-      res.status(500).json({message:"Not allowed purchase"})
+      return res.status(500).json({message:"Not allowed purchase"})
     }
     let checkProduct = await cartModel.find({
       userid: userid,
