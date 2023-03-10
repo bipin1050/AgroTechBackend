@@ -234,10 +234,10 @@ module.exports.buyProduct = async (req, res) => {
     let availableproduct = await planModel.findById(productid);
     if(availableproduct.userid===req.id)
     {
-      res.status(500).json({message:"Can't buy the product"})
+      return res.status(500).json({message:"Can't buy the product"})
     }
     if (availableproduct.quantity < number) {
-      res.status(400).json({ message: "Available Product low in stock" });
+      return res.status(400).json({ message: "Available Product low in stock" });
     } else if (availableproduct.quantity > number) {
       let temp = availableproduct.quantity - number;
       let updated = await planModel.findByIdAndUpdate(

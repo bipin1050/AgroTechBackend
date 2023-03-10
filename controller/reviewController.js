@@ -157,7 +157,7 @@ module.exports.createBlogs=async (req,res)=>{
 module.exports.getBlogs = async (req,res)=>{
   try{
     console.log(req.body)
-    let blogs=await blogModel.find().select('title author publicationDate')
+    let blogs=await blogModel.find().select('title author publicationDate highlights image')
     res.status(200).json({
       message:"Got blogs getBlogs reviewController controller",
       blogs:blogs
