@@ -21,7 +21,8 @@ const {
   buyProduct,
   getCategory,
   productHelper,
-  productList
+  productList,
+  getProductByCategory
 } = require("../controller/planController");
 
 const { upload } = require("../utility/multer");
@@ -30,7 +31,7 @@ planRouter.route("/allPlans/:id").get(getAllPlans);
 
 planRouter.route("/plan/:id").get(getPlan);
 planRouter.route("/getCategory").get(getCategory);
-
+planRouter.route("/getProductByCategory").post(getProductByCategory)
 planRouter
   .route("/crudPlan")
   .post(

@@ -65,6 +65,19 @@ module.exports.getCategory = async function getCategory(req, res) {
   }
 };
 
+module.exports.getProductByCategory= async (req,res)=>{
+  try{
+    const {category}=req.body;
+    const products=await planModel.find({category:category})
+    res.status(200).json({
+      message:"Get product by category",
+    data:products
+    })
+  }catch(err){
+    res.status(500).json({message:err.message})
+  }
+}
+
 module.exports.productList=async (req,res)=>{
   try{
     const product=await productModel.find().select('name').sort({name:1})
