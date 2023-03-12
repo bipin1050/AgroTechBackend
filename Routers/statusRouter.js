@@ -10,7 +10,9 @@ const {
   seeOnlineTruckerStatus,
   postNotification,
   getNotification,
-  updateNotificationStatus
+  updateNotificationStatus,
+  getNotificationCount,
+  assignTrucker
 } = require("../controller/statusController");
 
 
@@ -18,14 +20,20 @@ statusRouter.use(protectRoute);
 statusRouter.route("/createNotification").post(postNotification)
 
 statusRouter.route("/getNotification").post(getNotification)
+statusRouter.route('/getNotificationCount').post(getNotificationCount)
 
 statusRouter.route("/updateNotificationStatus").post(updateNotificationStatus)
 
 statusRouter.route("/seeProductStatus").post(seeProductStatus);
 
+
 statusRouter
   .route("/seeOnlineTruckerStatus")
   .post(isAuthorised(["admin"]), seeOnlineTruckerStatus);
+
+  statusRouter
+  .route("/assignTrucker")
+  .post(isAuthorised(["admin"]), assignTrucker);
 
 statusRouter
   .route("/changeProductStatus")
