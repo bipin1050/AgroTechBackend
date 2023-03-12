@@ -227,9 +227,9 @@ module.exports.resetPassword = async function resetPassword(req, res) {
   }
 };
 
-module.exports.logout = function logout(req, res) {
-  res.cookie("login", " ", { maxAge: 1 });
-  res.json({
-    message: "User logged out succesfully logout authController controller.",
-  });
-};
+// module.exports.logout = function logout(req, res) {
+//   res.cookie("login", " ", { maxAge: 1 });
+//   res.json({
+//     message: "User logged out succesfully logout authController controller.",
+//   });
+// };
