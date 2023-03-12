@@ -49,7 +49,7 @@ module.exports.login = async function loginUser(req, res) {
             role: role[0].role,
             jwt: token,
             name: user.name,
-            email: user.email
+            email: user.email,
           });
         } else {
           return res.status(400).json({
@@ -99,7 +99,11 @@ module.exports.protectRoute = async function protectRoute(req, res, next) {
 };
 
 //Added because protectroute had issue handling form data validation
-module.exports.protectRouteForm = async function protectRouteForm(req, res, next) {
+module.exports.protectRouteForm = async function protectRouteForm(
+  req,
+  res,
+  next
+) {
   try {
     let token = req.headers.authorization;
     if (token) {

@@ -3,7 +3,7 @@ const planModel = require("../models/planModel");
 const userModel = require("../models/userModel");
 const statusModel = require("../models/statusModel");
 const categoryModel = require("../models/categorymodel");
-const productModel=require("../models/productModel")
+const productModel = require("../models/productModel");
 const { upload } = require("../utility/multer");
 
 module.exports.getAllPlans = async function getAllPlans(req, res) {
@@ -65,46 +65,48 @@ module.exports.getCategory = async function getCategory(req, res) {
   }
 };
 
-module.exports.getProductByCategory= async (req,res)=>{
-  try{
-    const {category}=req.body;
-    const products=await planModel.find({category:category})
+module.exports.getProductByCategory = async (req, res) => {
+  try {
+    const { category } = req.body;
+    const products = await planModel.find({ category: category });
     res.status(200).json({
-      message:"Get product by category",
-    data:products
-    })
-  }catch(err){
-    res.status(500).json({message:err.message})
+      message: "Get product by category",
+      data: products,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
-}
+};
 
-module.exports.productList=async (req,res)=>{
-  try{
-    const product=await productModel.find().select('name').sort({name:1})
+module.exports.productList = async (req, res) => {
+  try {
+    const product = await productModel.find().select("name").sort({ name: 1 });
     res.status(200).json({
-      message:"Got product list",
-      product:product
-    })
-  }catch(err){
-    res.status(500).json({message:err.message})
+      message: "Got product list",
+      product: product,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
-}
+};
 
-module.exports.productHelper=async (req,res)=>{
-  try{
-    let productId=req.body.productId
-    if(!productId){
-      res.status(400).json({message:"Error in input"})
+module.exports.productHelper = async (req, res) => {
+  try {
+    let productId = req.body.productId;
+    if (!productId) {
+      res.status(400).json({ message: "Error in input" });
     }
-    let category=await productModel.findById(productId).select('category unit')
+    let category = await productModel
+      .findById(productId)
+      .select("category unit");
     res.status(200).json({
-      message:"Get category and unit",
-      category:category
-    })
-  }catch(err){
-      res.status(500).status({message:err.message})
+      message: "Get category and unit",
+      category: category,
+    });
+  } catch (err) {
+    res.status(500).status({ message: err.message });
   }
-}
+};
 
 module.exports.getCart = async function getCart(req, res) {
   try {
@@ -134,10 +136,10 @@ module.exports.addCart = async function addCart(req, res) {
   try {
     let userid = req.id;
     let productid = req.body.productid;
-    const id=await planModel.findById(productid).select('userid')
-    console.log(id.userid,userid)
-    if(id.userid===userid){
-      return res.status(500).json({message:"Not allowed purchase"})
+    const id = await planModel.findById(productid).select("userid");
+    console.log(id.userid, userid);
+    if (id.userid === userid) {
+      return res.status(500).json({ message: "Not allowed purchase" });
     }
     let checkProduct = await cartModel.find({
       userid: userid,
@@ -189,10 +191,10 @@ module.exports.createPlan = async function createPlan(req, res) {
   try {
     req.body.userid = req.id;
     req.body.image = req.file.filename;
-    const productId=req.body.productId
-    const name=await productModel.findById(productId).select('name')
-    delete req.body.productId
-    req.body.name=name.name
+    const productId = req.body.productId;
+    const name = await productModel.findById(productId).select("name");
+    delete req.body.productId;
+    req.body.name = name.name;
     let planData = req.body;
     let createdData = await planModel.create(planData);
     return res.status(200).json({
@@ -245,12 +247,13 @@ module.exports.buyProduct = async (req, res) => {
   try {
     let { productid, number } = req.body;
     let availableproduct = await planModel.findById(productid);
-    if(availableproduct.userid===req.id)
-    {
-      return res.status(500).json({message:"Can't buy the product"})
+    if (availableproduct.userid === req.id) {
+      return res.status(500).json({ message: "Can't buy the product" });
     }
     if (availableproduct.quantity < number) {
-      return res.status(400).json({ message: "Available Product low in stock" });
+      return res
+        .status(400)
+        .json({ message: "Available Product low in stock" });
     } else if (availableproduct.quantity > number) {
       let temp = availableproduct.quantity - number;
       let updated = await planModel.findByIdAndUpdate(
@@ -266,7 +269,7 @@ module.exports.buyProduct = async (req, res) => {
         buyerid: req.id,
         sellerid: availableproduct.userid,
         productname: availableproduct.name,
-        quantiy: number,
+        quantity: number,
         price: availableproduct.price,
         status: "Processing",
       });
