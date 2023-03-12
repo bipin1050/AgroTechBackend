@@ -25,7 +25,7 @@ const statusSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  quantiy: {
+  quantity: {
     type: Number,
     required: true,
   },
