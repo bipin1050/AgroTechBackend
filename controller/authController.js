@@ -49,6 +49,7 @@ module.exports.login = async function loginUser(req, res) {
             role: role[0].role,
             jwt: token,
             name: user.name,
+            email: user.email
           });
         } else {
           return res.status(400).json({
