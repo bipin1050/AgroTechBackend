@@ -43,7 +43,7 @@ module.exports.seeProductStatusByTrucker =
       });
       productsAssigned = [];
       for (let i = 0; i < statusId.length; i++) {
-        let products = await statusModel.findById(statusId[i]);
+        let products = await statusModel.findById(statusId[i].productStatusId);
         productsAssigned.push(products);
       }
       return res.json({
