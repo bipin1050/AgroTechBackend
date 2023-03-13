@@ -22,7 +22,8 @@ const {
   getCategory,
   productHelper,
   productList,
-  getProductByCategory
+  getProductByCategory,
+  search
 } = require("../controller/planController");
 
 const { upload } = require("../utility/multer");
@@ -32,6 +33,7 @@ planRouter.route("/allPlans/:id").get(getAllPlans);
 planRouter.route("/plan/:id").get(getPlan);
 planRouter.route("/getCategory").get(getCategory);
 planRouter.route("/getProductByCategory").post(getProductByCategory)
+planRouter.route('/search/:term').get(search)
 planRouter
   .route("/crudPlan")
   .post(

@@ -168,7 +168,9 @@ module.exports.assignTrucker=async (req,res)=>{
   try{
     const truckerId=req.body.truckerId
     const statusId=req.body.statusId
-    const id=await truckerModel.create({truckerId:truckerId,productStatusId:statusId})
+    for(let i=0;i<statusId.length;i++){
+      const id=await truckerModel.create({truckerId:truckerId,productStatusId:statusId[i]})
+    }
     res.status(200).json({message:"Trucker id assigned"})
   }catch(err){
     res.status(500).json({message:err.message})

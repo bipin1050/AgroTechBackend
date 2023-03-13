@@ -108,6 +108,21 @@ module.exports.productHelper = async (req, res) => {
   }
 };
 
+module.exports.search=async (req,res)=>{
+  try{
+    term=req.params.term
+    const plan=await planModel.find({
+      $or: [{ name: term}, { category: term }],
+    })
+    res.status(200).json({
+      message:"Items found",
+      data:plan
+    })
+  }catch(err){
+    res.status(500).json({message:"Message received"})
+  }
+}
+
 module.exports.getCart = async function getCart(req, res) {
   try {
     let userid = req.id;
