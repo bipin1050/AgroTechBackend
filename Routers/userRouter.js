@@ -33,7 +33,7 @@ userRouter.route("/forgetPassword").post(forgetPassword);
 
 userRouter.route("/resetPassword/:token").post(resetPassword);
 
-userRouter.route("/logout").get(logout);
+// userRouter.route("/logout").get(logout);
 
 userRouter.route("/isLogin").post(isLogin);
 
