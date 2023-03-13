@@ -34,6 +34,29 @@ module.exports.seeProductStatus = async function seeProductStatus(req, res) {
   }
 };
 
+module.exports.seeProductStatusByTrucker =
+  async function seeProductStatusByTrucker(req, res) {
+    try {
+      truckerId = req.id;
+      statusId = await truckerModel.find({
+        truckerId: truckerId,
+      });
+      productsAssigned = [];
+      for (let i = 0; i < statusId.length; i++) {
+        let products = await statusModel.findById(statusId[i]);
+        productsAssigned.push(products);
+      }
+      return res.json({
+        message: "List of Assigned Products",
+        data: productsAssigned,
+      });
+    } catch (err) {
+      res.status(500).json({
+        message: err.message,
+      });
+    }
+  };
+
 module.exports.changeProductStatus = async function changeProductStatus(
   req,
   res
