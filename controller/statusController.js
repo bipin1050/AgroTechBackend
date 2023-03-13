@@ -34,6 +34,90 @@ module.exports.seeProductStatus = async function seeProductStatus(req, res) {
   }
 };
 
+module.exports.seeProcessingStatus=async (req,res)=>{
+  try{
+    let processingPlans = await statusModel.find({ status: "Processing" });
+      return res.status(200).json({
+        message: "Got product for admin",
+        data: processingPlans,
+      });
+  }catch(err){
+    res.status(500).json({
+      message:err.message
+    })
+  }
+}
+
+module.exports.seeTruckAssigned=async (req,res)=>{
+  try{
+    let truckerAssigned=await statusModel.find({status:"Trucker Assigned"})
+      return res.status(200).json({
+        message: "Got product for admin",
+        data: truckerAssigned,
+      });
+  }catch(err){
+    res.status(500).json({
+      message:err.message
+    })
+  }
+}
+
+module.exports.seeProductDispatchedFromFarmer=async (req,res)=>{
+  try{
+    let productDispatchedFromFarmer=await statusModel.find({status:"Product dispatched from farmer"})
+      return res.status(200).json({
+        message: "Got product for admin",
+        data: productDispatchedFromFarmer,
+      });
+  }catch(err){
+    res.status(500).json({
+      message:err.message
+    })
+  }
+}
+
+module.exports.seeProductInAgrotech=async (req,res)=>{
+  try{
+    let productInAgrotech=await statusModel.find({status:"Product in Agrotech"})
+      return res.status(200).json({
+        message: "Got product for admin",
+        data: productInAgrotech,
+      });
+  }catch(err){
+    res.status(500).json({
+      message:err.message
+    })
+  }
+}
+
+module.exports.seeProductDispatchedFromAgrotech=async (req,res)=>{
+  try{
+    let productDispatchedFromAgrotech=await statusModel.find({status:" Product dispatched from Agrotech"}) 
+      return res.status(200).json({
+        message: "Got product for admin",
+        data: productDispatchedFromAgrotech,
+      });
+  }catch(err){
+    res.status(500).json({
+      message:err.message
+    })
+  }
+}
+
+module.exports.seeProductDelivered=async (req,res)=>{
+  try{
+    let productDelivered= await statusModel.find({status:"Product delivered"})
+      return res.status(200).json({
+        message: "Got product for admin",
+        data: productDelivered,
+      });
+  }catch(err){
+    res.status(500).json({
+      message:err.message
+    })
+  }
+}
+
 module.exports.seeProductStatusByTrucker =
   async function seeProductStatusByTrucker(req, res) {
     try {

@@ -14,6 +14,12 @@ const {
   getNotificationCount,
   assignTrucker,
   seeProductStatusByTrucker,
+  seeProcessingStatus,
+  seeTruckAssigned,
+  seeProductDispatchedFromFarmer,
+  seeProductInAgrotech,
+  seeProductDispatchedFromAgrotech,
+  seeProductDelivered
 } = require("../controller/statusController");
 
 statusRouter.use(protectRoute);
@@ -40,5 +46,13 @@ statusRouter
 statusRouter
   .route("/changeProductStatus")
   .post(isAuthorised(["trucker", "admin"]), changeProductStatus);
+
+statusRouter.use(isAuthorised(["admin"]))
+statusRouter.route("/seeProcessingStatus").post(seeProcessingStatus)
+statusRouter.route("/seeTruckAssigned").post(seeTruckAssigned)
+statusRouter.route("/seeProductDispatchedFromFarmer").post(seeProductDispatchedFromFarmer)
+statusRouter.route("/seeProductInAgrotech").post(seeProductInAgrotech)
+statusRouter.route("/seeProductDispatchedFromAgrotech").post(seeProductDispatchedFromAgrotech)
+statusRouter.route("/seeProductDelivered").post(seeProductDelivered)
 
 module.exports = statusRouter;
