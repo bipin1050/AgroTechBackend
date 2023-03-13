@@ -79,8 +79,11 @@ module.exports.deleteUser = async function deleteUser(req, res) {
   }
 };
 
-module.exports.updateProfileImage = function updateProfileImage(req, res) {
-  res.json({
+module.exports.editImage = async (req, res) =>{
+  image = req.file.filename;
+  userId=req.id
+  await userModel.findByIdAndUpdate(userId,{profileImage:image},{new:true})
+  res.status(200).json({
     message: "File uploaded successfully.",
   });
 };

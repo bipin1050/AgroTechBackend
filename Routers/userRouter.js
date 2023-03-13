@@ -7,7 +7,7 @@ const {
   getAllUser,
   updateUser,
   deleteUser,
-  updateProfileImage,
+  editImage,
 } = require("../controller/userController");
 
 const {
@@ -17,9 +17,12 @@ const {
   protectRoute,
   forgetPassword,
   resetPassword,
+  protectRouteForm,
   logout,
   isLogin
 } = require("../controller/authController");
+
+const {upload}=require("../utility/multer")
 // const { filter } = require("lodash");
 
 // User's Option
@@ -37,6 +40,7 @@ userRouter.route("/resetPassword/:token").post(resetPassword);
 
 userRouter.route("/isLogin").post(isLogin);
 
+userRouter.route("/editImage").post(protectRouteForm,upload.single("image"),editImage)
 // const multerStorage = multer.diskStorage({
 //   destination: function (req, file, cb) {
 //     cb(null, "/public/images");
