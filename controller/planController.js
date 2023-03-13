@@ -111,15 +111,22 @@ module.exports.productHelper = async (req, res) => {
 module.exports.search=async (req,res)=>{
   try{
     term=req.params.term
-    const plan=await planModel.find({
-      $or: [{ name: term}, { category: term }],
-    })
+    const plan=await planModel.find().select('name quantity unit category image price duration ratingAverage discount ')
+    plans=[]
+    for(let i=0;i<plan.length;i++){
+      if(plan[i].name.toLowerCase().includes(term.toLowerCase())){
+        plans.push(plan[i])
+      }
+      if(plan[i].category.toLowerCase().includes(term.toLowerCase())){
+        plans.push(plan[i])
+      }
+    }
     res.status(200).json({
       message:"Items found",
-      data:plan
+      data:plans
     })
   }catch(err){
-    res.status(500).json({message:"Message received"})
+    res.status(500).json({message:err.message})
   }
 }
 
