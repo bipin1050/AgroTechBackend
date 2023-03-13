@@ -28,13 +28,15 @@ const reviewSchema = new mongoose.Schema({
     default: Date.now(),
   },
   user: {
-    type: mongoose.Schema.ObjectId,
-    ref: "userModel",
+    // type: mongoose.Schema.ObjectId,
+    type: String,
+    // ref: "userModel",
     required: [true, "Review must belong to a user."],
   },
   plan: {
-    type: mongoose.Schema.ObjectId,
-    ref: "planModel",
+    // type: mongoose.Schema.ObjectId,
+    // ref: "planModel",
+    type: String,
     required: [true, "Review must belong to a plan."],
   },
 });
