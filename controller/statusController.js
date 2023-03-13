@@ -4,23 +4,24 @@ const userModel = require("../models/userModel");
 const statusModel = require("../models/statusModel");
 const notificationModel = require("../models/notificationModel");
 const notificationStatusModel = require("../models/notificationStatusModel");
-const truckerModel = require("../models/truckerModel")
+const truckerModel = require("../models/truckerModel");
 
 module.exports.seeProductStatus = async function seeProductStatus(req, res) {
   try {
     userid = req.id;
-    role=req.role
-    if(role==='admin'){
-      let plans=await statusModel.find({status:"Processing"})
+    role = req.role;
+    if (role === "admin") {
+      let plans = await statusModel.find({ status: "Processing" });
       return res.status(200).json({
-        message:"Got product for admin",
-        data:plans
-      }
-      )
+        message: "Got product for admin",
+        data: plans,
+      });
     }
-    let plans = await statusModel.find({
-      $or: [{ sellerid: req.id }, { buyerid: req.id },],
-    }).select('productname quantity status price');
+    let plans = await statusModel
+      .find({
+        $or: [{ sellerid: req.id }, { buyerid: req.id }],
+      })
+      .select("productname quantity status price");
     res.status(200).json({
       message:
         "Got status successfully seeProductStatus statusController controller",
@@ -61,7 +62,10 @@ module.exports.seeOnlineTruckerStatus = async function seeOnlineTruckerStatus(
   res
 ) {
   try {
-    const onlineDrivers = await userModel.find({ role:"trucker",availability: "online" });
+    const onlineDrivers = await userModel.find({
+      role: "trucker",
+      availability: "online",
+    });
     res.status(200).json({
       message:
         "Received online drivers' list seeOnlineTruckerStatus statusController controller",
@@ -135,7 +139,7 @@ module.exports.getNotificationCount = async (req, res) => {
     const id = req.id;
     notification = await notificationStatusModel
       .find({ userId: id })
-      .sort({ _id: -1 })
+      .sort({ _id: -1 });
     let count = 0;
     for (let i = 0; i < notification.length; i++) {
       if (notification[i].status === 1) {
@@ -144,7 +148,7 @@ module.exports.getNotificationCount = async (req, res) => {
     }
     res.status(200).json({
       message: "Notification received",
-      count: count
+      count: count,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -153,26 +157,34 @@ module.exports.getNotificationCount = async (req, res) => {
 
 module.exports.updateNotificationStatus = async (req, res) => {
   try {
-      await notificationStatusModel.updateMany(
-        { userId: req.id },
-        { status: 0 },
-        { new: true }
-      );
+    await notificationStatusModel.updateMany(
+      { userId: req.id },
+      { status: 0 },
+      { new: true }
+    );
     res.status(200).json({ message: "Successfully updated status" });
   } catch (err) {
     req.status(500).json({ message: err.message });
   }
 };
 
-module.exports.assignTrucker=async (req,res)=>{
-  try{
-    const truckerId=req.body.truckerId
-    const statusId=req.body.statusId
-    for(let i=0;i<statusId.length;i++){
-      const id=await truckerModel.create({truckerId:truckerId,productStatusId:statusId[i]})
+module.exports.assignTrucker = async (req, res) => {
+  try {
+    const truckerId = req.body.truckerId;
+    const statusId = req.body.statusId;
+    for (let i = 0; i < statusId.length; i++) {
+      const id = await truckerModel.create({
+        truckerId: truckerId,
+        productStatusId: statusId[i],
+      });
     }
-    res.status(200).json({message:"Trucker id assigned"})
-  }catch(err){
-    res.status(500).json({message:err.message})
+    for (let i = 0; i < statusId.length; i++) {
+      const processingProducts = await statusModel.findById(statusId[i]);
+      (processingProducts.status = "Trucker Assigned"),
+        await processingProducts.save();
+    }
+    res.status(200).json({ message: "Trucker id assigned" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
-}
+};
