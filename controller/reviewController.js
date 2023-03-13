@@ -52,8 +52,9 @@ module.exports.top3Reviews = async function top3Reviews(req, res) {
 module.exports.getPlanReviews = async function getPlanReviews(req, res) {
   try {
     let planid = req.params.id;
-    let reviews = await reviewModel.find();
-    reviews = reviews.filter((review) => review.plan._id == planid);
+    let reviews = await reviewModel.find({
+      plan: planid,
+    });
     if (reviews) {
       return res.json({
         message: "Review retrieved getPlanReviews reviewController controller",
