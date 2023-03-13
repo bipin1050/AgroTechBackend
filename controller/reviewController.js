@@ -76,7 +76,7 @@ module.exports.createReview = async function createReview(req, res) {
     let id = req.params.plan;
     let plan = await planModel.findById(id);
     let review = await reviewModel.create(req.body);
-    plan.ratingsAverage = (plan.ratingsAverage + req.body.rating) / 2;
+    plan.ratingsAverage  = (plan.ratingsAverage + req.body.rating) / 2;
     await plan.save();
     res.json({
       message: "Review created createReview reviewController controller",

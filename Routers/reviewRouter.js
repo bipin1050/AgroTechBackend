@@ -2,7 +2,11 @@ const express = require("express");
 
 const reviewRouter = express.Router();
 
-const { protectRoute,isAuthorised,protectRouteForm } = require("../controller/authController");
+const {
+  protectRoute,
+  isAuthorised,
+  protectRouteForm,
+} = require("../controller/authController");
 const {
   getAllReviews,
   top3Reviews,
@@ -12,20 +16,14 @@ const {
   deleteReview,
   getBlogs,
   getBlogsById,
-  createBlogs
+  createBlogs,
 } = require("../controller/reviewController");
 
-const {upload}=require("../utility/multer");
+const { upload } = require("../utility/multer");
 
 reviewRouter.route("/all").get(getAllReviews);
-
-reviewRouter.route("/top3").get(top3Reviews);
-
-reviewRouter.route("/getBlogs").get(getBlogs)
-reviewRouter.route("/getBlogs/:id").get(getBlogsById)
 reviewRouter.route("/:id").get(getPlanReviews);
-
-reviewRouter.route('/createBlogs').post(protectRouteForm,isAuthorised(['admin']),upload.single("image"),createBlogs)
+reviewRouter.route("/top3").get(top3Reviews);
 
 reviewRouter.use(protectRoute);
 reviewRouter
@@ -33,5 +31,17 @@ reviewRouter
   .post(createReview)
   .patch(updateReview)
   .delete(deleteReview);
+
+reviewRouter.route("/getBlogs").get(getBlogs);
+reviewRouter.route("/getBlogs/:id").get(getBlogsById);
+
+reviewRouter
+  .route("/createBlogs")
+  .post(
+    protectRouteForm,
+    isAuthorised(["admin"]),
+    upload.single("image"),
+    createBlogs
+  );
 
 module.exports = reviewRouter;
