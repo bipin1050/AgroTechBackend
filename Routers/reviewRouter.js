@@ -28,14 +28,6 @@ reviewRouter.route("/top3").get(top3Reviews);
 reviewRouter.route("/getBlogs").get(getBlogs);
 reviewRouter.route("/getBlogs/:id").get(getBlogsById);
 
-reviewRouter.use(protectRoute);
-reviewRouter
-  .route("/crud/:plan")
-  .post(createReview)
-  .patch(updateReview)
-  .delete(deleteReview);
-
-
 reviewRouter
   .route("/createBlogs")
   .post(
@@ -44,5 +36,13 @@ reviewRouter
     upload.single("image"),
     createBlogs
   );
+reviewRouter.use(protectRoute);
+reviewRouter
+  .route("/crud/:plan")
+  .post(createReview)
+  .patch(updateReview)
+  .delete(deleteReview);
+
+
 
 module.exports = reviewRouter;
