@@ -22,8 +22,11 @@ const {
 const { upload } = require("../utility/multer");
 
 reviewRouter.route("/all").get(getAllReviews);
-reviewRouter.route("/:id").get(getPlanReviews);
+reviewRouter.route("/planReview/:id").get(getPlanReviews);
 reviewRouter.route("/top3").get(top3Reviews);
+
+reviewRouter.route("/getBlogs").get(getBlogs);
+reviewRouter.route("/getBlogs/:id").get(getBlogsById);
 
 reviewRouter.use(protectRoute);
 reviewRouter
@@ -32,8 +35,6 @@ reviewRouter
   .patch(updateReview)
   .delete(deleteReview);
 
-reviewRouter.route("/getBlogs").get(getBlogs);
-reviewRouter.route("/getBlogs/:id").get(getBlogsById);
 
 reviewRouter
   .route("/createBlogs")
