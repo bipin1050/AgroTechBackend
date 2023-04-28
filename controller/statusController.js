@@ -92,7 +92,7 @@ module.exports.seeProductInAgrotech=async (req,res)=>{
 
 module.exports.seeProductDispatchedFromAgrotech=async (req,res)=>{
   try{
-    let productDispatchedFromAgrotech=await statusModel.find({status:" Product dispatched from Agrotech"}) 
+    let productDispatchedFromAgrotech=await statusModel.find({status:"Product dispatched from Agrotech"}) 
       return res.status(200).json({
         message: "Got product for admin",
         data: productDispatchedFromAgrotech,
