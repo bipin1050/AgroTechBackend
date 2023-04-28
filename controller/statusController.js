@@ -230,7 +230,6 @@ module.exports.getNotification = async (req, res) => {
         await notificationModel.findById(notification[i].notificationId)
       );
     }
-    console.log(notify);
     res.status(200).json({
       message: "Notification received",
       count: count,
