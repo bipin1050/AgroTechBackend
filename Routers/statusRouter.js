@@ -19,7 +19,8 @@ const {
   seeProductDispatchedFromFarmer,
   seeProductInAgrotech,
   seeProductDispatchedFromAgrotech,
-  seeProductDelivered
+  seeProductDelivered,
+  assignTrucker2
 } = require("../controller/statusController");
 
 statusRouter.use(protectRoute);
@@ -42,6 +43,10 @@ statusRouter
 statusRouter
   .route("/assignTrucker")
   .post(isAuthorised(["admin"]), assignTrucker);
+
+  statusRouter
+  .route("/assignTrucker2")
+  .post(isAuthorised(["admin"]), assignTrucker2);
 
 statusRouter
   .route("/changeProductStatus")
