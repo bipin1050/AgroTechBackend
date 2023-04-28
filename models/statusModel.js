@@ -37,6 +37,10 @@ const statusSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  paymentStatus: {
+    type: Number, //0 means Cash on Delivery, 1 means Payment via Khalti
+    required: true,
+  },
 });
 
 const statusModel = mongoose.model("statusModel", statusSchema);

@@ -5,6 +5,7 @@ const statusModel = require("../models/statusModel");
 const categoryModel = require("../models/categorymodel");
 const productModel = require("../models/productModel");
 const { upload } = require("../utility/multer");
+const axios = require("axios");
 
 module.exports.getAllPlans = async function getAllPlans(req, res) {
   try {
@@ -108,27 +109,31 @@ module.exports.productHelper = async (req, res) => {
   }
 };
 
-module.exports.search=async (req,res)=>{
-  try{
-    term=req.params.term
-    const plan=await planModel.find().select('name quantity unit category image price duration ratingAverage discount ')
-    plans=[]
-    for(let i=0;i<plan.length;i++){
-      if(plan[i].name.toLowerCase().includes(term.toLowerCase())){
-        plans.push(plan[i])
+module.exports.search = async (req, res) => {
+  try {
+    term = req.params.term;
+    const plan = await planModel
+      .find()
+      .select(
+        "name quantity unit category image price duration ratingAverage discount "
+      );
+    plans = [];
+    for (let i = 0; i < plan.length; i++) {
+      if (plan[i].name.toLowerCase().includes(term.toLowerCase())) {
+        plans.push(plan[i]);
       }
-      if(plan[i].category.toLowerCase().includes(term.toLowerCase())){
-        plans.push(plan[i])
+      if (plan[i].category.toLowerCase().includes(term.toLowerCase())) {
+        plans.push(plan[i]);
       }
     }
     res.status(200).json({
-      message:"Items found",
-      data:plans
-    })
-  }catch(err){
-    res.status(500).json({message:err.message})
+      message: "Items found",
+      data: plans,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
-}
+};
 
 module.exports.getCart = async function getCart(req, res) {
   try {
@@ -265,6 +270,45 @@ module.exports.deletePlan = async function deletePlan(req, res) {
   }
 };
 
+module.exports.buyProductKhalti = async (req, res) => {
+  try {
+    let { productid, number } = req.body;
+    let availableproduct = await planModel.findById(productid);
+    if (availableproduct.userid === req.id) {
+      return res.status(500).json({ message: "Can't buy the product" });
+    }
+    if (availableproduct.quantity < number) {
+      return res
+        .status(400)
+        .json({ message: "Available Product low in stock" });
+    }
+    let paymentURL;
+    axios
+      .post(
+        "https://khalti.com/api/v2/epayment/initiate/",
+        {
+          return_url: "http://localhost:3000",
+          website_url: "http://localhost:3000",
+          amount: quantity * availableproduct.price,
+          purchase_order_id: productid,
+          purchase_order_name: availableproduct.name,
+        },
+        {
+          Authorization: "Key live_secret_key_7a74090b028e4a99b562ea9e68eab1de",
+        }
+      )
+      .then((res) => {
+        paymentURL = res.payment_url;
+      });
+
+    res.status(200).json({ paymentURL: paymentURL });
+  } catch (err) {
+    res.status(500).json({
+      message: err,
+    });
+  }
+};
+
 module.exports.buyProduct = async (req, res) => {
   try {
     let { productid, number } = req.body;
@@ -287,6 +331,7 @@ module.exports.buyProduct = async (req, res) => {
         userid: req.id,
         productid: productid,
       });
+
       await statusModel.create({
         buyerid: req.id,
         sellerid: availableproduct.userid,
@@ -295,6 +340,7 @@ module.exports.buyProduct = async (req, res) => {
         price: availableproduct.price,
         status: "Processing",
       });
+
       res.status(200).json({ message: "Successful purchase" });
     } else if (availableproduct.quantity === number) {
       await planModel.findByIdAndDelete(productid);

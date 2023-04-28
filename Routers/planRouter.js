@@ -23,7 +23,8 @@ const {
   productHelper,
   productList,
   getProductByCategory,
-  search
+  search,
+  buyProductKhalti,
 } = require("../controller/planController");
 
 const { upload } = require("../utility/multer");
@@ -32,8 +33,8 @@ planRouter.route("/allPlans/:id").get(getAllPlans);
 
 planRouter.route("/plan/:id").get(getPlan);
 planRouter.route("/getCategory").get(getCategory);
-planRouter.route("/getProductByCategory").post(getProductByCategory)
-planRouter.route('/search/:term').get(search)
+planRouter.route("/getProductByCategory").post(getProductByCategory);
+planRouter.route("/search/:term").get(search);
 planRouter
   .route("/crudPlan")
   .post(
@@ -48,10 +49,11 @@ planRouter.route("/getCart").post(getCart);
 planRouter.route("/addCart").post(addCart);
 planRouter.route("/deleteCart/:id").post(deleteCart);
 planRouter.route("/buyProduct").post(buyProduct);
+planRouter.route("/buyProduct/Khalti").post(buyProductKhalti);
 
 planRouter.use(isAuthorised(["admin", "farmer"]));
-planRouter.route("/productList").post(productList)
-planRouter.route("/productHelper").post(productHelper)
+planRouter.route("/productList").post(productList);
+planRouter.route("/productHelper").post(productHelper);
 planRouter.route("/crudPlan/farmer").post(getPlanByFarmer);
 
 planRouter.route("/crudPlan/:id").patch(updatePlan).delete(deletePlan);
