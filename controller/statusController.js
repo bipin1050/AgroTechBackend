@@ -148,11 +148,13 @@ module.exports.changeProductStatus = async function changeProductStatus(
   try {
     statusid = req.body.statusid;
     statusreq = req.body.status;
-    await statusModel.findByIdAndUpdate(
-      statusid,
-      { status: statusreq },
-      { new: true }
-    );
+    for (let i=0;i<statusid.length;i++){
+      await statusModel.findByIdAndUpdate(
+        statusid[i],
+        { status: statusreq },
+        { new: true }
+      );
+    }
     res.status(200).json({
       message:
         "Successfully changed status changeProductStatus statusController controller",
