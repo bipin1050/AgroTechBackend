@@ -92,7 +92,7 @@ module.exports.seeProductInAgrotech=async (req,res)=>{
 
 module.exports.seeProductDispatchedFromAgrotech=async (req,res)=>{
   try{
-    let productDispatchedFromAgrotech=await statusModel.find({status:" Product dispatched from Agrotech"}) 
+    let productDispatchedFromAgrotech=await statusModel.find({status:"Product dispatched from Agrotech"}) 
       return res.status(200).json({
         message: "Got product for admin",
         data: productDispatchedFromAgrotech,
@@ -148,11 +148,13 @@ module.exports.changeProductStatus = async function changeProductStatus(
   try {
     statusid = req.body.statusid;
     statusreq = req.body.status;
-    await statusModel.findByIdAndUpdate(
-      statusid,
-      { status: statusreq },
-      { new: true }
-    );
+    for (let i=0;i<statusid.length;i++){
+      await statusModel.findByIdAndUpdate(
+        statusid[i],
+        { status: statusreq },
+        { new: true }
+      );
+    }
     res.status(200).json({
       message:
         "Successfully changed status changeProductStatus statusController controller",
@@ -287,6 +289,27 @@ module.exports.assignTrucker = async (req, res) => {
     for (let i = 0; i < statusId.length; i++) {
       const processingProducts = await statusModel.findById(statusId[i]);
       (processingProducts.status = "Trucker Assigned"),
+        await processingProducts.save();
+    }
+    res.status(200).json({ message: "Trucker id assigned" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports.assignTrucker2 = async (req, res) => {
+  try {
+    const truckerId = req.body.truckerId;
+    const statusId = req.body.statusId;
+    for (let i = 0; i < statusId.length; i++) {
+      const id = await truckerModel.create({
+        truckerId: truckerId,
+        productStatusId: statusId[i],
+      });
+    }
+    for (let i = 0; i < statusId.length; i++) {
+      const processingProducts = await statusModel.findById(statusId[i]);
+      (processingProducts.status = "Product dispatched from Agrotech"),
         await processingProducts.save();
     }
     res.status(200).json({ message: "Trucker id assigned" });
