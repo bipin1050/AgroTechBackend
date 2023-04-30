@@ -27,6 +27,14 @@ module.exports.signup = async function signUp(req, res) {
   }
 };
 
+module.exports.verifysignup= async (req,res)=>{
+  try{
+
+  }catch(err){
+
+  }
+}
+
 // Login
 module.exports.login = async function loginUser(req, res) {
   try {
