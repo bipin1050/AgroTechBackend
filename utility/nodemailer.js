@@ -21,7 +21,9 @@ module.exports.sendMail = async function sendMail(str, data) {
     <p>Your details:</p>
     <p>Name: ${data.name}</p>
     <p>Email: ${data.email}</p>
-    <a href="${"http://localhost:3000/verify/"+id}">Click here</a>
+    <a href="${
+      "http://localhost:3000/verify/" + id + "?id=" + id
+    }">Click here</a>
     `;
   } else if (str == "resetpassword") {
     Osubject = `Reset Password`;
