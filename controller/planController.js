@@ -347,7 +347,7 @@ module.exports.buyProduct = async (req, res) => {
         quantity: number,
         price: availableproduct.price,
         status: "Processing",
-        paymentStatus: 0,
+        paymentStatus: mode,
       });
 
       res.status(200).json({ message: "Successful purchase" });
