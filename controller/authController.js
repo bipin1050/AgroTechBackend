@@ -29,9 +29,11 @@ module.exports.signup = async function signUp(req, res) {
 
 module.exports.verifysignup= async (req,res)=>{
   try{
-
+    const id=req.params.id
+    await userModel.findByIdAndUpdate(id,{verified:true},{new:true})
+    res.status(200).json({message:"Successfully verified"})
   }catch(err){
-
+    res.status(500).json({message:err.message})
   }
 }
 

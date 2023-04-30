@@ -15,7 +15,6 @@ module.exports.sendMail = async function sendMail(str, data) {
   if (str == "signup") {
     Osubject = `Thank you for signing ${data.name}`;
     var id=data._id;
-    console.log(id);
     Ohtml = `
     <h1>Welcome to Agro-Tech</h1>
     <p>Hope you have a good time ahead!</p>
