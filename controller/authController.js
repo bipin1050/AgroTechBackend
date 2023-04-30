@@ -47,7 +47,7 @@ module.exports.login = async function loginUser(req, res) {
       let role = await userModel.where({ email: data.email });
 
       if (user) {
-        if (user.password == data.password) {
+        if (user.password == data.password & user.verified) {
           let uid = user["_id"];
           let token = jwt.sign({ payload: uid }, JWT_KEY, {
             expiresIn: "5 days",
