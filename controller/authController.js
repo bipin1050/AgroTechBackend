@@ -27,6 +27,16 @@ module.exports.signup = async function signUp(req, res) {
   }
 };
 
+module.exports.verifysignup= async (req,res)=>{
+  try{
+    const id=req.params.id
+    await userModel.findByIdAndUpdate(id,{verified:true},{new:true})
+    res.status(200).json({message:"Successfully verified"})
+  }catch(err){
+    res.status(500).json({message:err.message})
+  }
+}
+
 // Login
 module.exports.login = async function loginUser(req, res) {
   try {
@@ -37,7 +47,7 @@ module.exports.login = async function loginUser(req, res) {
       let role = await userModel.where({ email: data.email });
 
       if (user) {
-        if (user.password == data.password) {
+        if (user.password == data.password & user.verified) {
           let uid = user["_id"];
           let token = jwt.sign({ payload: uid }, JWT_KEY, {
             expiresIn: "5 days",

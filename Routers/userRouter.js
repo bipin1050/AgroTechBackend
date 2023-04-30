@@ -19,7 +19,8 @@ const {
   resetPassword,
   protectRouteForm,
   logout,
-  isLogin
+  isLogin,
+  verifysignup
 } = require("../controller/authController");
 
 const {upload}=require("../utility/multer")
@@ -31,6 +32,8 @@ userRouter.route("/:id").patch(updateUser).delete(deleteUser);
 userRouter.route("/signup").post(signup);
 
 userRouter.route("/login").post(login);
+
+userRouter.route("/verify/:id").get(verifysignup)
 
 userRouter.route("/forgetPassword").post(forgetPassword);
 

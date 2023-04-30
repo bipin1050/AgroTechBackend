@@ -33,6 +33,11 @@ const userSchema = mongoose.Schema({
     required: true,
     minLength: 8,
   },
+  verified:{
+    type:Boolean,
+    required:true,
+    default:false
+  },
   // confirmPassword: {
   //   type: String,
   //   required: true,
