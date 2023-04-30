@@ -319,7 +319,7 @@ module.exports.buyProductKhalti = async (req, res) => {
 
 module.exports.buyProduct = async (req, res) => {
   try {
-    let { productid, number,mode } = req.body;
+    let { productid, number, mode } = req.body;
     let availableproduct = await planModel.findById(productid);
     if (availableproduct.userid === req.id) {
       return res.status(500).json({ message: "Can't buy the product" });
@@ -347,7 +347,7 @@ module.exports.buyProduct = async (req, res) => {
         quantity: number,
         price: availableproduct.price,
         status: "Processing",
-        paymentStatus:mode
+        paymentStatus: 0,
       });
 
       res.status(200).json({ message: "Successful purchase" });
