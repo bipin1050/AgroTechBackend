@@ -33,7 +33,7 @@ module.exports.sendMail = async function sendMail(str, data) {
   }
 
   let info = await transporter.sendMail({
-    from: '"Agro-Tech" <bigyan.koirala2056@gmail.com>',
+    from: '"Agro-Tech" <075bct019.bigyan@pcampus.edu.np>',
     to: data.email,
     subject: Osubject,
     html: Ohtml,
