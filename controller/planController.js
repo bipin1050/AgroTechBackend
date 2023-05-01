@@ -295,7 +295,7 @@ module.exports.buyProductKhalti = async (req, res) => {
       .post(
         "https://khalti.com/api/v2/epayment/initiate/",
         {
-          return_url: `http://localhost:3000/payment/detail?productid=${productid}&number=${number}`,
+          return_url: `http://localhost:3000/payment?productid=${productid}&number=${number}`,
           website_url: "http://localhost:3000",
           amount: Math.ceil(
             100 *
