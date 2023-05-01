@@ -99,10 +99,18 @@ module.exports.productHelper = async (req, res) => {
     }
     let category = await productModel
       .findById(productId)
-      .select("category unit");
+      .select("name category unit");
+      let currentDate=new Date()
+     const price=await axios.post("http://127.0.0.1:5000/predict_price",{
+        Commodity:category.name,
+        Year:currentDate.getFullYear(),
+        Month:currentDate.getMonth()+1,
+        Day:currentDate.getDate()
+      })
     res.status(200).json({
       message: "Get category and unit",
       category: category,
+      price:price.data.Price
     });
   } catch (err) {
     res.status(500).status({ message: err.message });
